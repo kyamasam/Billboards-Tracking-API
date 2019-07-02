@@ -36,4 +36,49 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * get the Campaigns for this user
+     *
+     */
+
+    public function Campaign(){
+        return $this->hasMany(Campaign::class);
+    }
+    /**
+     * get the Budgets for this user
+     *
+     */
+    public function Budget(){
+        return $this->hasMany(Budget::class);
+    }
+    /**
+     * get the AccountType for this user
+     *
+     */
+    public function AccountType(){
+        return $this->belongsTo(AccountType::class);
+    }
+    /**
+     * get the AccountStatus for this user
+     *
+     */
+    public function AccountStatus(){
+        return $this->belongsTo(AccountStatus::class);
+    }
+    /**
+     * the wallet associated with this user
+     *
+     */
+    public function Wallet(){
+        return $this->hasOne(Wallet::class);
+    }
+    /**
+     * the payment history for this user
+     *
+     */
+    public function PaymentHistory(){
+        return $this->hasMany(UserPaymentHistory::class);
+    }
 }

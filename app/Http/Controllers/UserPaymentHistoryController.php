@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\UserType;
+use App\UserPaymentHistory;
 use Illuminate\Http\Request;
 
-class UserTypeController extends Controller
+class UserPaymentHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class UserTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\UserType  $userType
+     * @param  \App\UserPaymentHistory  $userPaymentHistory
      * @return \Illuminate\Http\Response
      */
-    public function show(UserType $userType)
+    public function show(UserPaymentHistory $userPaymentHistory)
     {
         //
     }
@@ -52,10 +52,10 @@ class UserTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\UserType  $userType
+     * @param  \App\UserPaymentHistory  $userPaymentHistory
      * @return \Illuminate\Http\Response
      */
-    public function edit(UserType $userType)
+    public function edit(UserPaymentHistory $userPaymentHistory)
     {
         //
     }
@@ -64,10 +64,10 @@ class UserTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\UserType  $userType
+     * @param  \App\UserPaymentHistory  $userPaymentHistory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UserType $userType)
+    public function update(Request $request, UserPaymentHistory $userPaymentHistory)
     {
         //
     }
@@ -75,10 +75,10 @@ class UserTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\UserType  $userType
+     * @param  \App\UserPaymentHistory  $userPaymentHistory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserType $userType)
+    public function destroy(UserPaymentHistory $userPaymentHistory)
     {
         //
     }

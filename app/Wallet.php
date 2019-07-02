@@ -10,4 +10,12 @@ class Wallet extends Model
         'user_id','credit_balance'
     ];
     protected $hidden =['credit_balance_verifier'];
+
+    /**
+     * Get the user who owns this wallet
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function User(){
+        return $this->belongsTo(User::class);
+    }
 }

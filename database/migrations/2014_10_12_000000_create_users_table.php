@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('middle_name');
             $table->string('first_name');
             $table->string('msisdn');
-            $table->integer('user_type');
+            $table->integer('account_type');
             $table->string('avatar')->default('/images/default_avatar.png');
             $table->string('cover_photo');
             $table->integer('is_verified')->default(0);
