@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArtworksTable extends Migration
+class CreateWalletsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateArtworksTable extends Migration
      */
     public function up()
     {
-        Schema::create('artworks', function (Blueprint $table) {
+        Schema::create('wallets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('height');
-            $table->float('width');
-            $table->string('image_src');
+            $table->integer('user_id')->references('id')->on('users');
+            $table->float('credit_balance');
+            $table->string('credit_balance_verifier', 10);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateArtworksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('artworks');
+        Schema::dropIfExists('wallets');
     }
 }

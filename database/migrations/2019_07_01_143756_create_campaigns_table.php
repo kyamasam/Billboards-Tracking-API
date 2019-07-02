@@ -15,6 +15,11 @@ class CreateCampaignsTable extends Migration
     {
         Schema::create('campaigns', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('campaign_name');
+            $table->integer('budget_id')->refernces('id')->on('budgets');
+            $table->integer('schedule_id')->refernces('id')->on('schedules');
+            $table->integer('campaign_status')->refernces('id')->on('campaign_statuses');
+            $table->integer('owner_id')->refernces('id')->on('users');
             $table->timestamps();
         });
     }

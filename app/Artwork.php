@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Artwork extends Model
 {
-    //
+    protected $fillable = ['height', 'width', 'image_src', ];
 }

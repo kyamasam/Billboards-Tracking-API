@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArtworksTable extends Migration
+class CreateCampaignArtworksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateArtworksTable extends Migration
      */
     public function up()
     {
-        Schema::create('artworks', function (Blueprint $table) {
+        Schema::create('campaign_artworks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('height');
-            $table->float('width');
-            $table->string('image_src');
+            $table->integer('campaign_id')->references('id')->on('campaigns');
+            $table->integer('artwork_id')->references('id')->on('artworks');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateArtworksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('artworks');
+        Schema::dropIfExists('campaign_artworks');
     }
 }
