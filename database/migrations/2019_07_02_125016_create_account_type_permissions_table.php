@@ -15,8 +15,8 @@ class CreateAccountTypePermissionsTable extends Migration
     {
         Schema::create('account_type_permissions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('account_type_id')->references('id')->on('account_types');
-            $table->bigIncrements('permission_id')->references('id')->on('permissions');
+            $table->integer('account_type_id')->references('id')->on('account_types');
+            $table->integer('permission_id')->references('id')->on('permissions');
             $table->timestamps();
         });
     }
