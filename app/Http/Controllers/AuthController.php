@@ -13,10 +13,12 @@ use phpDocumentor\Reflection\Types\Integer;
 class AuthController extends Controller
 {
     public function register(Request $request ){
+
+        //todo: validate length of phone numbers
         $this->validate($request, [
             'user_name' => 'required|min:3|unique:users',
             'email' => 'required|email|unique:users',
-            'msisdn' => 'required|unique:users',
+            'msisdn' => 'required|numeric|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
 

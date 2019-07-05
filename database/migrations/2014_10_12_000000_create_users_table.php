@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->integer('is_trusted')->nullable()->default(0);
             $table->integer('account_status')->nullable()->default(1);
             $table->string('password');
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
