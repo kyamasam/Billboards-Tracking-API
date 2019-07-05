@@ -15,7 +15,7 @@ class Campaign extends Model
     ];
 
     /**
-     * get the User who owns this Campaign
+     * get the UserResource who owns this Campaign
      *
      */
     public function Owner(){

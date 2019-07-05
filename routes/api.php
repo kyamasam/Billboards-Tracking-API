@@ -13,18 +13,23 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
 
-    Route::post('users/login', 'AuthController@login');
-    Route::post('users/register', 'AuthController@register');
+
+    Route::post('auth/login', 'AuthController@login');
+    Route::post('auth/register', 'AuthController@register');
+
+    Route::middleware('auth:api')->group(function () {
+        Route::get('auth/details', 'AuthController@details');
+
+        Route::resource('account', 'UserAccountManagementController');
+    });
+
+
+
+    //routes that require authentication
+
 });
 
-Route::middleware('auth:api')->group(function () {
-//    Route::get('user', 'PassportController@details');
 
-    //other routes that require authentication
-//    Route::resource('products', 'ProductController');
-});

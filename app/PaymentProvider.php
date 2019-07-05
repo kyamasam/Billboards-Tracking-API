@@ -9,7 +9,7 @@ class PaymentProvider extends Model
     protected $fillable =['provider_name'];
 
     /**
-     * The User Payment History records facilitated by this Payment provider
+     * The UserResource Payment History records facilitated by this Payment provider
      *
      */
     public function UserPaymentHistory(){

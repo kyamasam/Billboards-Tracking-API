@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Budget extends Model
 {
     /**
-     * User associated with budget.
+     * UserResource associated with budget.
      *
      */
     public function User(){
