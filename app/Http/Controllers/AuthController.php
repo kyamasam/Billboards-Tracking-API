@@ -74,36 +74,6 @@ class AuthController extends Controller
     {
 
 
-//
-//        //a user can only edit their own account
-//        if($user_acc->id !== auth()->user()->id){
-//            $this->ErrorReporter("Unauthorized" , "You Do not have rights to edit this account", 400);
-//        }
-
-
-
-        return response()->json([""=>$request]);
-
-//        $user_array = (array) $user;
-//        Validator::make($user_array, [
-//            'user_name' => ['required','min:3'],
-//            'msisdn' => ['required','unique:users'],
-//        ]);
-        $user_acc->name = $user->name;
-        $user_acc->user_name = $user->user_name;
-        $user_acc->last_name = $user->last_name;
-        $user_acc->middle_name = $user->middle_name;
-        $user_acc->first_name = $user->first_name;
-        $user_acc->msisdn = $user->msisdn;
-        $user_acc->account_type = $user->account_type;
-        $user_acc->avatar = $user->avatar;
-        $user_acc->cover_photo = $user->cover_photo;
-
-        $user_acc->save();
-//
-        return response (new UserResource($user_acc))->setStatusCode(200);
-
-
     }
 
     public function ErrorReporter(String $error_title , String $error_detail,Integer $status){

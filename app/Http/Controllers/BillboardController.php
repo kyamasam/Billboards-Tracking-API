@@ -3,18 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Billboard;
+use App\Http\Resources\BillboardCollection;
+use App\Http\Resources\BillboardResource;
 use Illuminate\Http\Request;
 
 class BillboardController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
+     * @return BillboardCollection
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        //anyone can access this
+
+        return new BillboardCollection(Billboard::paginate());
+
     }
 
     /**
@@ -35,18 +40,48 @@ class BillboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            "display_duration" => "required",
+            "location_lat" => "required",
+            "location_long" => "required",
+            "placement" => "required",
+            "billboard_picture" => "required",
+            "average_daily_views" => "required",
+            "definition" => "required",
+            "dimensions_width" => "required",
+            "dimensions_height" => "required",
+            "description" => "required",
+        ]);
+
+        $input = $request->all();
+
+        $billboard = new Billboard;
+        $billboard->display_duration = $input['display_duration'];
+        $billboard->location_lat = $input['location_lat'];
+        $billboard->location_long = $input['location_long'];
+        $billboard->placement = $input['placement'];
+        $billboard->billboard_picture = $input['billboard_picture'];
+        $billboard->average_daily_views = $input['average_daily_views'];
+        $billboard->definition = $input['definition'];
+        $billboard->dimensions_width = $input['dimensions_width'];
+        $billboard->dimensions_height = $input['dimensions_height'];
+        $billboard->description = $input['description'];
+
+        $billboard->save();
+        return response (new BillboardResource($billboard))->setStatusCode(200);
+
+
     }
 
     /**
-     * Display the specified resource.
+     * @param Billboard $billboard
+     * @return BillboardResource
      *
-     * @param  \App\Billboard  $billboard
-     * @return \Illuminate\Http\Response
      */
+
     public function show(Billboard $billboard)
     {
-        //
+        return new BillboardResource($billboard);
     }
 
     /**
@@ -61,15 +96,46 @@ class BillboardController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Billboard  $billboard
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Billboard $billboard)
+    public function update(Request $request, $id)
     {
-        //
+
+
+        $this->validate($request, [
+            "display_duration" => "required",
+            "location_lat" => "required",
+            "location_long" => "required",
+            "placement" => "required",
+            "billboard_picture" => "required",
+            "average_daily_views" => "required",
+            "definition" => "required",
+            "dimensions_width" => "required",
+            "dimensions_height" => "required",
+            "description" => "required",
+        ]);
+
+        $input = $request->all();
+
+        $billboard = Billboard::find($id);
+
+        $billboard->display_duration = $input['display_duration'];
+        $billboard->location_lat = $input['location_lat'];
+        $billboard->location_long = $input['location_long'];
+        $billboard->placement = $input['placement'];
+        $billboard->billboard_picture = $input['billboard_picture'];
+        $billboard->average_daily_views = $input['average_daily_views'];
+        $billboard->definition = $input['definition'];
+        $billboard->dimensions_width = $input['dimensions_width'];
+        $billboard->dimensions_height = $input['dimensions_height'];
+        $billboard->description = $input['description'];
+
+        $billboard->save();
+        return response (new BillboardResource($billboard))->setStatusCode(200);
     }
 
     /**
@@ -80,6 +146,7 @@ class BillboardController extends Controller
      */
     public function destroy(Billboard $billboard)
     {
-        //
+        return response()->json(["data"=>$billboard]);
+
     }
 }
