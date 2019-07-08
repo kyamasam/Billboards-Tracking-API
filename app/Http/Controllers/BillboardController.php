@@ -6,10 +6,10 @@ use App\Billboard;
 use App\Http\Resources\BillboardCollection;
 use App\Http\Resources\BillboardResource;
 use Illuminate\Http\Request;
-
+use App\Traits\BaseTraits;
 class BillboardController extends Controller
 {
-
+    use BaseTraits;
     /**
      * @return BillboardCollection
      *
@@ -138,15 +138,12 @@ class BillboardController extends Controller
         return response (new BillboardResource($billboard))->setStatusCode(200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Billboard  $billboard
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Billboard $billboard)
-    {
-        return response()->json(["data"=>$billboard]);
+    // todo finish delete and soft delete
 
+
+    public function destroy($id)
+    {
+        Billboard::destroy($id);
+        return $this->SuccessReporter('Record Deleted', 'Record was successfully deleted',200);
     }
 }
