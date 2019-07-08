@@ -3,83 +3,111 @@
 namespace App\Http\Controllers;
 
 use App\CampaignStatus;
+use App\Http\Resources\CampaignStatusCollection;
+use App\Http\Resources\CampaignStatusResource;
 use Illuminate\Http\Request;
+use App\Traits\BaseTraits;
 
 class CampaignStatusController extends Controller
 {
+    use BaseTraits;
     /**
-     * Display a listing of the resource.
+     * @return CampaignStatusCollection
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        //anyone can access this
+        return new CampaignStatusCollection(CampaignStatus::paginate());
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
-     * Store a newly created resource in storage.
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            "name" => "required",
+            "description" => "required",
+        ]);
+
+
+
+        $input = $request->all();
+
+
+
+
+
+        $campaignStatus = new CampaignStatus();
+        $campaignStatus->name = $input['name'];
+        $campaignStatus->description = $input['description'];
+
+
+        $campaignStatus->save();
+        return response (new CampaignStatusResource($campaignStatus))->setStatusCode(200);
+
+
     }
 
     /**
-     * Display the specified resource.
+     * @param $id
+     * @return CampaignStatusResource
      *
-     * @param  \App\CampaignStatus  $campaignStatus
-     * @return \Illuminate\Http\Response
      */
-    public function show(CampaignStatus $campaignStatus)
+
+    public function show($id)
     {
-        //
+        $campaignStatus = CampaignStatus::find($id);
+        return new CampaignStatusResource($campaignStatus);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      *
-     * @param  \App\CampaignStatus  $campaignStatus
-     * @return \Illuminate\Http\Response
      */
-    public function edit(CampaignStatus $campaignStatus)
+    public function update(Request $request, $id)
     {
-        //
+
+
+        $this->validate($request, [
+            "name" => "required",
+            "description" => "required",
+        ]);
+
+        $input = $request->all();
+
+
+        $schedule = CampaignStatus::find($id);
+
+        $schedule->name = $input['name'];
+        $schedule->description = $input['description'];
+
+        $schedule->save();
+        return response (new CampaignStatusResource($schedule))->setStatusCode(200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CampaignStatus  $campaignStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, CampaignStatus $campaignStatus)
-    {
-        //
-    }
 
     /**
-     * Remove the specified resource from storage.
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      *
-     * @param  \App\CampaignStatus  $campaignStatus
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(CampaignStatus $campaignStatus)
+
+
+    public function destroy($id)
     {
-        //
+        CampaignStatus::destroy($id);
+        return $this->SuccessReporter('Record Deleted', 'Record was successfully deleted',200);
     }
+
 }

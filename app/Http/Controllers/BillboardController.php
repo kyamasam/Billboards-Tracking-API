@@ -138,7 +138,13 @@ class BillboardController extends Controller
         return response (new BillboardResource($billboard))->setStatusCode(200);
     }
 
-    // todo finish delete and soft delete
+    // todo - add file uploads for billboard images
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     *
+     */
 
 
     public function destroy($id)

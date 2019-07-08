@@ -28,6 +28,10 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::put('account/update/{id}', 'UserAccountManagementController@admin_update');
 
         Route::resource('billboards', 'BillboardController');
+        Route::resource('campaigns/budgets', 'BudgetController');
+        Route::resource('campaigns/schedules', 'ScheduleController');
+        Route::resource('campaigns/status', 'CampaignStatusController');
+        Route::resource('campaigns/artwork', 'ArtworkController');
 
     });
 

@@ -2,84 +2,125 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ScheduleCollection;
+use App\Http\Resources\ScheduleResource;
 use App\Schedule;
 use Illuminate\Http\Request;
-
+use App\Traits\BaseTraits;
 class ScheduleController extends Controller
 {
+     use BaseTraits;
     /**
-     * Display a listing of the resource.
+     * @return ScheduleCollection
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        //anyone can access this
+        return new ScheduleCollection(Schedule::paginate());
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
-     * Store a newly created resource in storage.
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            "schedule_day" => "required",
+            "schedule_time" => "required",
+        ]);
+
+
+
+        $input = $request->all();
+
+        //verify length
+
+        $schedule_day_array = explode(',', $input['schedule_day']);
+        $schedule_time_array = explode(',', $input['schedule_time']);
+
+        if(count($schedule_day_array) != count($schedule_time_array)){
+            return $this->ErrorReporter('The given data was invalid', 'The number of schedule days must match the number of schedule times' , 422);
+        }
+
+
+
+        $schedule = new Schedule();
+        $schedule->schedule_day = $input['schedule_day'];
+        $schedule->schedule_time = $input['schedule_time'];
+
+
+        $schedule->save();
+        return response (new ScheduleResource($schedule))->setStatusCode(200);
+
+
     }
 
     /**
-     * Display the specified resource.
+     * @param Schedule $schedule
+     * @return ScheduleResource
      *
-     * @param  \App\Schedule  $schedule
-     * @return \Illuminate\Http\Response
      */
+
     public function show(Schedule $schedule)
     {
-        //
+        return new ScheduleResource($schedule);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Schedule  $schedule
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Schedule $schedule)
-    {
-        //
-    }
 
     /**
-     * Update the specified resource in storage.
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Schedule  $schedule
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Schedule $schedule)
+    public function update(Request $request, $id)
     {
-        //
+
+
+        $this->validate($request, [
+            "schedule_day" => "required",
+            "schedule_time" => "required",
+        ]);
+
+        $input = $request->all();
+
+        $schedule_day_array = explode(',', $input['schedule_day']);
+        $schedule_time_array = explode(',', $input['schedule_time']);
+
+        if(count($schedule_day_array) != count($schedule_time_array)){
+            return $this->ErrorReporter('The given data was invalid', 'The number of schedule days must match the number of schedule times' , 422);
+        }
+
+        $schedule = Schedule::find($id);
+
+        $schedule->schedule_day = $input['schedule_day'];
+        $schedule->schedule_time = $input['schedule_time'];
+
+        $schedule->save();
+        return response (new ScheduleResource($schedule))->setStatusCode(200);
     }
 
+
     /**
-     * Remove the specified resource from storage.
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      *
-     * @param  \App\Schedule  $schedule
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Schedule $schedule)
+
+
+    public function destroy($id)
     {
-        //
+        Schedule::destroy($id);
+        return $this->SuccessReporter('Record Deleted', 'Record was successfully deleted',200);
     }
+
+
 }

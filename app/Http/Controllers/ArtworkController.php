@@ -3,83 +3,110 @@
 namespace App\Http\Controllers;
 
 use App\Artwork;
+use App\Http\Resources\ArtworkCollection;
+use App\Http\Resources\ArtworkResource;
 use Illuminate\Http\Request;
-
+use App\Traits\BaseTraits;
 class ArtworkController extends Controller
 {
+   use BaseTraits;
+
     /**
-     * Display a listing of the resource.
+     * @return ArtworkCollection
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        //anyone can access this
+        return new ArtworkCollection(Artwork::paginate());
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
-     * Store a newly created resource in storage.
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            "height" => "required|numeric",
+            "width" => "required|numeric",
+            "image_src" => "required|string",
+        ]);
+
+
+        $input = $request->all();
+
+
+        $artwork = new Artwork();
+        $artwork->height= $input['height'];
+        $artwork->width= $input['width'];
+        $artwork->image_src= $input['image_src'];
+
+
+        $artwork->save();
+        return response (new ArtworkResource($artwork))->setStatusCode(200);
+
+
     }
 
     /**
-     * Display the specified resource.
+     * @param $id
+     * @return ArtworkResource
      *
-     * @param  \App\Artwork  $artwork
-     * @return \Illuminate\Http\Response
      */
-    public function show(Artwork $artwork)
+
+    public function show($id)
     {
-        //
+        $artwork = Artwork::find($id);
+        return new ArtworkResource($artwork);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      *
-     * @param  \App\Artwork  $artwork
-     * @return \Illuminate\Http\Response
      */
-    public function edit(Artwork $artwork)
+    public function update(Request $request, $id)
     {
-        //
+
+
+        $this->validate($request, [
+            "height" => "required|numeric",
+            "width" => "required|numeric",
+            "image_src" => "required|string",
+        ]);
+
+        $input = $request->all();
+
+
+        $artwork = Artwork::find($id);
+
+        $artwork->height= $input['height'];
+        $artwork->width= $input['width'];
+        $artwork->image_src= $input['image_src'];
+
+        $artwork->save();
+        return response (new ArtworkResource($artwork))->setStatusCode(200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Artwork  $artwork
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Artwork $artwork)
-    {
-        //
-    }
 
     /**
-     * Remove the specified resource from storage.
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      *
-     * @param  \App\Artwork  $artwork
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Artwork $artwork)
+
+
+    public function destroy($id)
     {
-        //
+        Artwork::destroy($id);
+        return $this->SuccessReporter('Record Deleted', 'Record was successfully deleted',200);
     }
 }
