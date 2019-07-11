@@ -61,14 +61,14 @@ class User extends Authenticatable
      *
      */
     public function AccountType(){
-        return $this->belongsTo(AccountType::class);
+        return $this->belongsTo(AccountType::class , 'account_type');
     }
     /**
      * get the AccountStatus for this user
      *
      */
     public function AccountStatus(){
-        return $this->belongsTo(AccountStatus::class);
+        return $this->belongsTo(AccountStatus::class, 'account_status');
     }
     /**
      * the wallet associated with this user

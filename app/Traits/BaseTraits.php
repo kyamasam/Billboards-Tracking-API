@@ -18,7 +18,8 @@ trait BaseTraits
             "message"=>$error_title,
             "errors"=>[
                 'detail' => [$error_detail]
-            ]
+            ],
+            "data"=>null,
         ], $status);
     }
 
@@ -41,6 +42,7 @@ trait BaseTraits
     public function SuccessReporter(String $success_title , String $success_detail, int $status){
         return response([
             "message"=>$success_title,
+            "errors"=>null,
             "data"=>[
                 'detail' => [$success_detail]
             ]
@@ -82,5 +84,18 @@ trait BaseTraits
         return $owns_acc;
     }
 
+    /**
+     * When a resource Id passed need
+     * @param $resource
+     * @param $resource_name
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     *
+     */
+
+    public function ResourceNotFound($resource, $resource_name){
+        if (!isset($resource)){
+            return $this->ErrorReporter($resource_name.' Not Found', $resource_name.' Id passed was not found in the database',422);
+        }
+    }
 
 }

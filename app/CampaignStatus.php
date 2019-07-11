@@ -11,7 +11,7 @@ class CampaignStatus extends Model
     /**
      * get the Campaigns associated with this CampaignStatus
      */
-    public function Campaign(){
-        return $this->hasMany(Campaign::class);
+    public function Campaigns(){
+        return $this->hasMany(Campaign::class, 'campaign_status');
     }
 }

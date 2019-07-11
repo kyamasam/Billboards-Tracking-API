@@ -53,18 +53,18 @@ class UserAccountManagementController extends Controller
      * @return UserResource|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      *
      */
-    public function show($id)
-    {
-        $user = User::find($id);
-
-        if($this->OwnsAccountOrAdmin((int)$id)){
-            //the user owns this account and can therefore edit it
-        }
-        else{
-            return $this->ErrorReporter("Unauthorized" , "You Do not have rights to view this account", 401);
-        }
-       return new UserResource($user);
-    }
+//    public function show($id)
+//    {
+//        $user = User::find($id);
+//
+//        if($this->OwnsAccountOrAdmin((int)$id)){
+//            //the user owns this account and can therefore edit it
+//        }
+//        else{
+//            return $this->ErrorReporter("Unauthorized" , "You Do not have rights to view this account", 401);
+//        }
+//       return new UserResource($user);
+//    }
 
 
 

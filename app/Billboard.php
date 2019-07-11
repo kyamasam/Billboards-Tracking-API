@@ -25,6 +25,6 @@ class Billboard extends Model
      *
      */
     public function Campaigns(){
-        return $this->belongsToMany(BillboardCampaign::class , 'billboard_campaigns', 'billboard_id', 'campaign_id');
+        return $this->belongsToMany(Campaign::class , 'billboard_campaigns', 'billboard_id', 'campaign_id');
     }
 }

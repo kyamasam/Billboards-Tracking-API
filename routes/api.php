@@ -32,6 +32,9 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::resource('campaigns/schedules', 'ScheduleController');
         Route::resource('campaigns/status', 'CampaignStatusController');
         Route::resource('campaigns/artwork', 'ArtworkController');
+        Route::resource('campaigns', 'CampaignController');
+        Route::post('campaigns/locations', 'CampaignController@Locations');
+
 
     });
 

@@ -13,7 +13,7 @@ class Schedule extends Model
      * get the Campaign associated with this schedule
      */
     public function Campaign(){
-        return $this->belongsTo(Campaign::class);
+        return $this->hasOne(Campaign::class);
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\AccountType;
+use App\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -28,7 +29,7 @@ class UserResource extends JsonResource
         //todo : fix issue where account type does not exist
         return [
             'related' => [
-                'user_type' => new AccountTypeResource(AccountType::find($this->account_type)),
+                'account_type' => new AccountTypeResource(AccountType::find($this->account_type)),
             ],
         ];
     }

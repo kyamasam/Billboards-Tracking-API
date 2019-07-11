@@ -26,20 +26,20 @@ class Campaign extends Model
      *
      */
     public function Budget(){
-        return $this->hasOne(Budget::class);
+        return $this->belongsTo(Budget::class);
     }
 
     /**
      * get the schedule associated with this campaign
      */
     public function Schedule(){
-        return $this->hasOne(Schedule::class);
+        return $this->belongsTo(Schedule::class);
     }
     /**
      * get the Campaign Status
      */
     public function CampaignStatus(){
-        return $this->belongsTo(CampaignStatus::class);
+        return $this->belongsTo(CampaignStatus::class , 'campaign_status');
     }
 
 
@@ -48,7 +48,7 @@ class Campaign extends Model
      *
      */
     public function Billboards(){
-        return $this->belongsToMany(BillboardCampaign::class ,'billboard_campaigns','campaign_id', 'billboard_id' );
+        return $this->belongsToMany(Billboard::class ,'billboard_campaigns','campaign_id', 'billboard_id' );
     }
     /**
      * get the Artwork that belongs to this Campaign

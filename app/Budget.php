@@ -19,6 +19,6 @@ class Budget extends Model
      *
      */
     public function Campaign(){
-        return $this->belongsTo(Campaign::class);
+        return $this->hasOne(Campaign::class);
     }
 }
