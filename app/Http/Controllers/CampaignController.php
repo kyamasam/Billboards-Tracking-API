@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Billboard;
 use App\BillboardCampaign;
 use App\Budget;
 use App\Campaign;
 use App\CampaignStatus;
+use App\Http\Resources\BillboardCollection;
 use App\Http\Resources\CampaignCollection;
 use App\Http\Resources\CampaignResource;
 use App\Schedule;
 use App\User;
 use Illuminate\Http\Request;
 use App\Traits\BaseTraits;
+use phpDocumentor\Reflection\Types\Null_;
+
 class CampaignController extends Controller
 {
      use BaseTraits;
@@ -95,9 +99,10 @@ class CampaignController extends Controller
     {
         $campaign = Campaign::find($id)->with(['Owner','Budget','CampaignStatus', 'Schedule'])->first();
 
-//        return response()->json(["data"=>$artwork]);
         return new CampaignResource($campaign);
     }
+
+
 
     /**
      * @param Request $request
@@ -146,6 +151,21 @@ class CampaignController extends Controller
     }
 
 
+    /**
+     * @param null $campaign_id
+     * @return BillboardCollection|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+
+    public function SelectedLocations($campaign_id)
+    {
+        $selections= BillboardCampaign::where('campaign_id','=',$campaign_id)->pluck('billboard_id');
+
+//        return response()->json($selections);
+
+        $billboards = Billboard::all()->whereIn('id',$selections);
+        return new BillboardCollection($billboards);
+    }
+
 
 
     public function Locations(Request $request){
@@ -167,6 +187,21 @@ class CampaignController extends Controller
             $new_billboard->save();
         }
 
-        return $this->SuccessReporter('Selected Billboards','Successfully Selected Billboards', 201);
+        $selected_billboards = Billboard::all()->whereIn('id', $billboards);
+        return new BillboardCollection($selected_billboards);
+
     }
+
+
+    public function removeSelections(Request $request){
+        $input= $request->all();
+
+        $billboards = explode(',',$input['billboards']);
+        //
+        $prev_selections= BillboardCampaign::where('campaign_id','=',$input['campaign_id'])->whereIn('billboard_id',$billboards)->pluck('id');
+
+        BillboardCampaign::destroy([$prev_selections]);
+        return $this->SuccessReporter('Records Deleted', 'Record was successfully deleted',200);
+    }
+
 }

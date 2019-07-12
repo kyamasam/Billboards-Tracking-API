@@ -15,10 +15,9 @@ class CreateBudgetsTable extends Migration
     {
         Schema::create('budgets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('daily_expenditure');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
-            $table->integer('schedule_id')->references('id')->on('schedules');
+            $table->float('total_expenditure');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

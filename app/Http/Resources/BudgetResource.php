@@ -14,6 +14,10 @@ class BudgetResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "type"=>'budget',
+            "id"=>$this->id,
+            'attributes' => parent::toArray($request)
+        ];
     }
 }

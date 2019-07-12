@@ -34,6 +34,8 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::resource('campaigns/artwork', 'ArtworkController');
         Route::resource('campaigns', 'CampaignController');
         Route::post('campaigns/locations', 'CampaignController@Locations');
+        Route::get('campaigns/locations/{campaign_id}', 'CampaignController@SelectedLocations');
+        Route::delete('campaigns/locations/remove_selections', 'CampaignController@removeSelections');
 
 
     });

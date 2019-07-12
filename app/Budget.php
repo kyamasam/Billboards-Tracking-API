@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Budget extends Model
 {
+    protected $fillable =[
+        'total_expenditure',
+        'start_date',
+        'end_date',
+    ];
     /**
      * UserResource associated with budget.
      *

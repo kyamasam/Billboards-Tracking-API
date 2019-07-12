@@ -3,83 +3,139 @@
 namespace App\Http\Controllers;
 
 use App\Budget;
+use App\Http\Resources\BudgetCollection;
+use App\Http\Resources\BudgetResource;
 use Illuminate\Http\Request;
-
+use App\Traits\BaseTraits;
 class BudgetController extends Controller
 {
+    use BaseTraits;
     /**
-     * Display a listing of the resource.
+     * @return BudgetCollection
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        //anyone can access this
+        return new BudgetCollection(Budget::paginate());
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
-     * Store a newly created resource in storage.
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            "total_expenditure" => "required|numeric",
+            "start_date" => "required|date_format:Y-m-d",
+            "end_date" => "required|date_format:Y-m-d",
+        ]);
+        //check that the end date is not less than start date
+        //convert to DateTime
+        $input = $request->all();
+        $start_date = new \DateTime($input['start_date']);
+        $end_date = new \DateTime($input['end_date']);
+        $today = new \DateTime(date('Y-m-d'));
+
+        if(!($start_date <= $end_date)){
+            return $this->ErrorReporter('Invalid Data','The End Date Must be equal to or greater than the start date', 422);
+
+        }elseif (!($today<=$start_date)){
+            return $this->ErrorReporter('Invalid Data','The Start Date Must be Later than or equal to today', 422);
+        }
+
+
+
+
+        $budget = new Budget();
+        $budget->total_expenditure= $input['total_expenditure'];
+        $budget->start_date= $input['start_date'];
+        $budget->end_date= $input['end_date'];
+
+
+        $budget->save();
+        return response (new BudgetResource($budget))->setStatusCode(201);
+
+
     }
 
     /**
-     * Display the specified resource.
+     * @param BudgetResource $budget
+     * @return BudgetResource
      *
-     * @param  \App\Budget  $budget
-     * @return \Illuminate\Http\Response
      */
+
     public function show(Budget $budget)
     {
-        //
+        return new BudgetResource($budget);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Budget  $budget
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Budget $budget)
-    {
-        //
-    }
 
     /**
-     * Update the specified resource in storage.
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Budget  $budget
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Budget $budget)
+    public function update(Request $request, $id)
     {
-        //
+
+
+        $this->validate($request, [
+            "total_expenditure" => "required|numeric",
+            "start_date" => "required|date_format:Y-m-d",
+            "end_date" => "required|date_format:Y-m-d",
+        ]);
+
+
+        //check that the end date is not less than start date
+        //convert to DateTime
+        $input = $request->all();
+        $start_date = new \DateTime($input['start_date']);
+        $end_date = new \DateTime($input['end_date']);
+        $today = new \DateTime(date('Y-m-d'));
+
+        if(!($start_date <= $end_date)){
+            return $this->ErrorReporter('Invalid Data','The End Date Must be equal to or greater than the start date', 422);
+
+        }elseif (!($today<=$start_date)){
+            return $this->ErrorReporter('Invalid Data','The Start Date Must be Later than or equal to today', 422);
+        }
+
+
+
+
+        $budget = Budget::find($id);
+        $budget->total_expenditure= $input['total_expenditure'];
+        $budget->start_date= $input['start_date'];
+        $budget->end_date= $input['end_date'];
+
+
+        $budget->save();
+        return response (new BudgetResource($budget))->setStatusCode(200);
     }
 
+
     /**
-     * Remove the specified resource from storage.
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      *
-     * @param  \App\Budget  $budget
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Budget $budget)
+
+
+    public function destroy($id)
     {
-        //
+        Budget::destroy($id);
+        return $this->SuccessReporter('Record Deleted', 'Record was successfully deleted',200);
     }
+
+
+
 }
