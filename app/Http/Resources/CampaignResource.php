@@ -24,12 +24,6 @@ class CampaignResource extends JsonResource
 
     public function with($request)
     {
-        //check that the following are actually set
-
-//        $budget = Budget::find()
-//
-//        schedule_id
-//        campaign_status
         return [
             'related' => [
                 'owner' => new UserResource($this->owner),

@@ -27,4 +27,11 @@ class Billboard extends Model
     public function Campaigns(){
         return $this->belongsToMany(Campaign::class , 'billboard_campaigns', 'billboard_id', 'campaign_id');
     }
+    /**
+     * get the artworks being used
+     *
+     */
+    public function Artwork(){
+        return $this->hasMany(Artwork::class);
+    }
 }

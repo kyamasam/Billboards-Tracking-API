@@ -55,7 +55,7 @@ class Campaign extends Model
      *
      */
     public function Artwork(){
-        return $this->belongsToMany(CampaignArtwork::class ,'campaign_artworks','campaign_id', 'artwork_id' );
+        return $this->hasMany(Artwork::class);
     }
 
 

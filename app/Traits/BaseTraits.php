@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 
 trait BaseTraits
 {
@@ -95,6 +96,25 @@ trait BaseTraits
     public function ResourceNotFound($resource, $resource_name){
         if (!isset($resource)){
             return $this->ErrorReporter($resource_name.' Not Found', $resource_name.' Id passed was not found in the database',422);
+        }
+    }
+
+    /**
+     * Use this Generic Method to Find if An Id exists in the database
+     * @param Model $model
+     * @param $id
+     * @param $ModelName
+     * @return bool|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     *
+     */
+
+    public function ValidateAvailability(Model $model,$id, $ModelName){
+        $result = $model::find($id);
+        if (!isset($result)){
+            return $this->ErrorReporter($ModelName.' Not Found', $ModelName.' Id passed was not found in the database',422);
+        }
+        else{
+            return true;
         }
     }
 
