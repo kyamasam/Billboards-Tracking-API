@@ -22,6 +22,8 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
     //todo: make all the routes plural
     //routes that require authentication
     Route::middleware('auth:api')->group(function () {
+
+
         Route::get('auth/details', 'AuthController@details');
         Route::resource('account', 'UserAccountManagementController');
         Route::post('account/bulk_delete', 'UserAccountManagementController@bulk_delete');
@@ -37,6 +39,8 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::get('campaigns/locations/{campaign_id}', 'CampaignController@SelectedLocations');
         Route::delete('campaigns/locations/remove_selections', 'CampaignController@removeSelections');
 
+        //PAYMENTS
+        Route::get('payments/stk/{phone}/{paybill?}', 'StkPushContoller@index');
 
     });
 
