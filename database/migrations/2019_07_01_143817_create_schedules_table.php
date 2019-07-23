@@ -15,8 +15,6 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('schedule_day'); //,['Su','Mo','Tu','We','Th','Fr','Sa']);
-            $table->text('schedule_time');//->format('h:i');
             $table->timestamps();
         });
     }

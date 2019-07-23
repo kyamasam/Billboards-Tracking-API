@@ -16,4 +16,12 @@ class Schedule extends Model
         return $this->hasOne(Campaign::class);
     }
 
+    /**
+     * get the Complete Schedule times
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ScheduleTimes(){
+        return $this->hasMany(ScheduleTimes::class);
+    }
+
 }

@@ -22,15 +22,7 @@ class BillboardController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -60,7 +52,10 @@ class BillboardController extends Controller
         $billboard->location_lat = $input['location_lat'];
         $billboard->location_long = $input['location_long'];
         $billboard->placement = $input['placement'];
-        $billboard->billboard_picture = $input['billboard_picture'];
+        $billboard_picture_ext=$request->file('billboard_picture')->getClientOriginalExtension();
+        $billboard_picture_path = $request->file('billboard_picture')
+            ->storeAs('billboard_pictures',$request->location_lat.$request->id.'bb'.'.'.$billboard_picture_ext);
+        $billboard->billboard_picture = $billboard_picture_path;
         $billboard->average_daily_views = $input['average_daily_views'];
         $billboard->definition = $input['definition'];
         $billboard->dimensions_width = $input['dimensions_width'];

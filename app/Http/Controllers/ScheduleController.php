@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ScheduleCollection;
 use App\Http\Resources\ScheduleResource;
+use App\Http\Resources\ScheduleTimesCollection;
+use App\Http\Resources\ScheduleTimesResource;
 use App\Schedule;
+use App\ScheduleTimes;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Traits\BaseTraits;
 class ScheduleController extends Controller
@@ -18,46 +22,25 @@ class ScheduleController extends Controller
     {
         //anyone can access this
         return new ScheduleCollection(Schedule::paginate());
-
     }
 
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
-     *
-     */
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            "schedule_day" => "required",
-            "schedule_time" => "required",
-        ]);
 
-
-
-        $input = $request->all();
-
-        //verify length
-
-        $schedule_day_array = explode(',', $input['schedule_day']);
-        $schedule_time_array = explode(',', $input['schedule_time']);
-
-        if(count($schedule_day_array) != count($schedule_time_array)){
-            return $this->ErrorReporter('The given data was invalid', 'The number of schedule days must match the number of schedule times' , 422);
-        }
-
+        $schedule_times = $request->schedule;
 
 
         $schedule = new Schedule();
-        $schedule->schedule_day = $input['schedule_day'];
-        $schedule->schedule_time = $input['schedule_time'];
-
-
         $schedule->save();
-        return response (new ScheduleResource($schedule))->setStatusCode(200);
+        $schedule_id=$schedule->id;
+
+        foreach ($schedule_times as &$schedule_time){
+            $schedule_time['schedule_id']=$schedule_id;
+        }
+        $complete_schedule_times = ScheduleTimes::insert($schedule_times);
+        return new ScheduleResource($schedule);
 
 
     }
@@ -65,7 +48,6 @@ class ScheduleController extends Controller
     /**
      * @param Schedule $schedule
      * @return ScheduleResource
-     *
      */
 
     public function show(Schedule $schedule)
@@ -84,28 +66,28 @@ class ScheduleController extends Controller
     public function update(Request $request, $id)
     {
 
-
-        $this->validate($request, [
-            "schedule_day" => "required",
-            "schedule_time" => "required",
-        ]);
-
-        $input = $request->all();
-
-        $schedule_day_array = explode(',', $input['schedule_day']);
-        $schedule_time_array = explode(',', $input['schedule_time']);
-
-        if(count($schedule_day_array) != count($schedule_time_array)){
-            return $this->ErrorReporter('The given data was invalid', 'The number of schedule days must match the number of schedule times' , 422);
+        try {
+            $schedule = Schedule::findOrFail($id);
         }
+        catch (ModelNotFoundException $e){
+            return $this->ErrorReporter('Schedule Not Found', 'Schedule Id passed was not found in the database',422);
+        }
+        $all_schedule_ids = $schedule->ScheduleTimes()->get()->pluck('id');
 
-        $schedule = Schedule::find($id);
+        //delete this entries to reduce the complexity
+        ScheduleTimes::destroy($all_schedule_ids);
 
-        $schedule->schedule_day = $input['schedule_day'];
-        $schedule->schedule_time = $input['schedule_time'];
+        // create again
+        $schedule_times = $request->schedule;
 
-        $schedule->save();
-        return response (new ScheduleResource($schedule))->setStatusCode(200);
+
+        foreach ($schedule_times as &$schedule_time){
+            $schedule_time['schedule_id']=$id;
+        }
+        //insert using mass assignment
+        $complete_schedule_times = ScheduleTimes::insert($schedule_times);
+
+        return new ScheduleResource($schedule);
     }
 
 
@@ -118,6 +100,17 @@ class ScheduleController extends Controller
 
     public function destroy($id)
     {
+        try {
+            $schedule = Schedule::findOrFail($id);
+        }
+        catch (ModelNotFoundException $e){
+            return $this->ErrorReporter('Schedule Not Found', 'Schedule Id passed was not found in the database',422);
+        }
+        $all_schedule_ids = $schedule->ScheduleTimes()->get()->pluck('id');
+
+        //delete all related times
+        ScheduleTimes::destroy($all_schedule_ids);
+        //delete the actual schedule
         Schedule::destroy($id);
         return $this->SuccessReporter('Record Deleted', 'Record was successfully deleted',200);
     }

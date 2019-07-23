@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ScheduleCollection extends ResourceCollection
+class ScheduleTimesCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -16,5 +16,4 @@ class ScheduleCollection extends ResourceCollection
     {
         return parent::toArray($request);
     }
-
 }

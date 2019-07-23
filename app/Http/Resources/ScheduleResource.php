@@ -20,4 +20,12 @@ class ScheduleResource extends JsonResource
             'attributes' => parent::toArray($request)
         ];
     }
+    public function with($request)
+    {
+        return [
+            'related' => [
+                'ScheduleTimes' => new ScheduleTimesResource($this->ScheduleTimes),
+            ],
+        ];
+    }
 }
