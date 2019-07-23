@@ -53,9 +53,10 @@ class BillboardController extends Controller
         $billboard->location_long = $input['location_long'];
         $billboard->placement = $input['placement'];
         $billboard_picture_ext=$request->file('billboard_picture')->getClientOriginalExtension();
-        $billboard_picture_path = $request->file('billboard_picture')
-            ->storeAs('billboard_pictures',$request->location_lat.$request->id.'bb'.'.'.$billboard_picture_ext);
-        $billboard->billboard_picture = $billboard_picture_path;
+        $billboard_picture_file = $request->file('billboard_picture');
+        $billboard_picture_file_name= $request->location_lat.$request->id.'bb'.'.'.$billboard_picture_ext;
+        Storage::disk('local')->putFileAs('',$billboard_picture_file,$billboard_picture_file_name);
+        $billboard->billboard_picture = $billboard_picture_file_name;
         $billboard->average_daily_views = $input['average_daily_views'];
         $billboard->definition = $input['definition'];
         $billboard->dimensions_width = $input['dimensions_width'];
