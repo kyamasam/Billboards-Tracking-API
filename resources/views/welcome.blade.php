@@ -85,6 +85,7 @@
                 </div>
 
                 <div class="links">
+                    <img src={{asset('/images/defaults/default_avatar.png')}}>
                     <a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>
                     <a href="https://laravel-news.com">News</a>

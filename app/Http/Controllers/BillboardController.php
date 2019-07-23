@@ -7,6 +7,10 @@ use App\Http\Resources\BillboardCollection;
 use App\Http\Resources\BillboardResource;
 use Illuminate\Http\Request;
 use App\Traits\BaseTraits;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
 class BillboardController extends Controller
 {
     use BaseTraits;
@@ -37,7 +41,7 @@ class BillboardController extends Controller
             "location_lat" => "required",
             "location_long" => "required",
             "placement" => "required",
-            "billboard_picture" => "required",
+            "billboard_picture" => "required|mimes:jpg,jpeg,png,bmp,tiff |max:4096",
             "average_daily_views" => "required",
             "definition" => "required",
             "dimensions_width" => "required",
@@ -47,6 +51,8 @@ class BillboardController extends Controller
 
         $input = $request->all();
 
+        $now = strtotime(date("h:i:sa"));
+
         $billboard = new Billboard;
         $billboard->display_duration = $input['display_duration'];
         $billboard->location_lat = $input['location_lat'];
@@ -54,9 +60,9 @@ class BillboardController extends Controller
         $billboard->placement = $input['placement'];
         $billboard_picture_ext=$request->file('billboard_picture')->getClientOriginalExtension();
         $billboard_picture_file = $request->file('billboard_picture');
-        $billboard_picture_file_name= $request->location_lat.$request->id.'bb'.'.'.$billboard_picture_ext;
-        Storage::disk('local')->putFileAs('',$billboard_picture_file,$billboard_picture_file_name);
-        $billboard->billboard_picture = $billboard_picture_file_name;
+        $billboard_picture_file_name= 'bb'.$request->location_lat.$now.'.'.$billboard_picture_ext;
+        Storage::disk('custom')->putFileAs('public/billboards',$billboard_picture_file,$billboard_picture_file_name);
+        $billboard->billboard_picture = env('MEDIA_SERVER_URL').'billboards/'.$billboard_picture_file_name;
         $billboard->average_daily_views = $input['average_daily_views'];
         $billboard->definition = $input['definition'];
         $billboard->dimensions_width = $input['dimensions_width'];
@@ -101,13 +107,13 @@ class BillboardController extends Controller
     public function update(Request $request, $id)
     {
 
-
+        //todo find a way of converting psd to png
         $this->validate($request, [
             "display_duration" => "required",
             "location_lat" => "required",
             "location_long" => "required",
             "placement" => "required",
-            "billboard_picture" => "required",
+            "billboard_picture" => "required|mimes:jpg,jpeg,png,bmp,tiff |max:4096",
             "average_daily_views" => "required",
             "definition" => "required",
             "dimensions_width" => "required",
@@ -118,12 +124,17 @@ class BillboardController extends Controller
         $input = $request->all();
 
         $billboard = Billboard::find($id);
+        $now = strtotime(date("h:i:sa"));
 
         $billboard->display_duration = $input['display_duration'];
         $billboard->location_lat = $input['location_lat'];
         $billboard->location_long = $input['location_long'];
         $billboard->placement = $input['placement'];
-        $billboard->billboard_picture = $input['billboard_picture'];
+        $billboard_picture_ext=$request->file('billboard_picture')->getClientOriginalExtension();
+        $billboard_picture_file = $request->file('billboard_picture');
+        $billboard_picture_file_name= 'bb'.$request->location_lat.$now.'.'.$billboard_picture_ext;
+        Storage::disk('custom')->putFileAs('public/billboards',$billboard_picture_file,$billboard_picture_file_name);
+        $billboard->billboard_picture = env('MEDIA_SERVER_URL').'billboards/'.$billboard_picture_file_name;
         $billboard->average_daily_views = $input['average_daily_views'];
         $billboard->definition = $input['definition'];
         $billboard->dimensions_width = $input['dimensions_width'];
@@ -145,6 +156,12 @@ class BillboardController extends Controller
 
     public function destroy($id)
     {
+        //get image
+        $picture= Billboard::find($id)->billboard_picture;
+        //get rid of teh media serve url
+        $new_pic= str_replace(env('MEDIA_SERVER_URL').'billboards/',"",$picture);
+        //delete image
+        File::delete(env('MEDIA_SERVER_FOLDER').'billboards/'.$new_pic);
         Billboard::destroy($id);
         return $this->SuccessReporter('Record Deleted', 'Record was successfully deleted',200);
     }
