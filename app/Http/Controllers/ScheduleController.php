@@ -59,9 +59,7 @@ class ScheduleController extends Controller
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
-     *
+     * @return ScheduleResource|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {

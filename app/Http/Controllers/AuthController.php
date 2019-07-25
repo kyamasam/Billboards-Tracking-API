@@ -25,6 +25,7 @@ class AuthController extends Controller
         $user= User::create([
             'user_name' => $request->user_name,
             'email' => $request->email,
+            'msisdn' => $request->msisdn,
             'password' => Hash::make($request->password),
         ]);
         $token = $user->createToken('AdkloutToken')->accessToken;

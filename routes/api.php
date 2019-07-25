@@ -16,13 +16,11 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
 
-
     Route::post('auth/login', 'AuthController@login');
     Route::post('auth/register', 'AuthController@register');
     //todo: make all the routes plural
     //routes that require authentication
     Route::middleware('auth:api')->group(function () {
-
 
         Route::get('auth/details', 'AuthController@details');
         Route::resource('account', 'UserAccountManagementController');
@@ -40,13 +38,16 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::delete('campaigns/locations/remove_selections', 'CampaignController@removeSelections');
 
         //PAYMENTS
-        Route::get('payments/stk/{phone}/{paybill?}', 'StkPushContoller@index');
+        //payment providers
+        Route::resource('payments','PaymentProvidersController');
+        Route::post('payments/stk/', 'MpesaStkTriggerController@index');
+        Route::post('payments/stk/verify', 'MpesaStkTriggerController@verify');
+
+        //user wallet
+        Route::get('wallets','WalletController@index');
+        Route::get('wallets/transactions','WalletController@transactions');
 
     });
-
-
-
-
 
 });
 

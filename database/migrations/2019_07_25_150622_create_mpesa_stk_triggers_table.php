@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWalletsTable extends Migration
+class CreateMpesaStkTriggersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateWalletsTable extends Migration
      */
     public function up()
     {
-        Schema::create('wallets', function (Blueprint $table) {
+        Schema::create('mpesa_stk_triggers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->references('id')->on('users');
-            $table->float('credit_balance');
-            $table->string('credit_balance_verifier');
+            $table->string('merchant_request_id');
+            $table->string('checkout_request_id');
+            $table->string('response_code');
+            $table->text('response_description');
+            $table->text('customer_message');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateWalletsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wallets');
+        Schema::dropIfExists('mpesa_stk_triggers');
     }
 }

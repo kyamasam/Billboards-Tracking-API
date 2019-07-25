@@ -145,7 +145,6 @@ class BillboardController extends Controller
         return response (new BillboardResource($billboard))->setStatusCode(200);
     }
 
-    // todo - add file uploads for billboard images
 
     /**
      * @param $id

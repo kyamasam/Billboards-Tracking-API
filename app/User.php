@@ -77,11 +77,9 @@ class User extends Authenticatable
     public function Wallet(){
         return $this->hasOne(Wallet::class);
     }
-    /**
-     * the payment history for this user
-     *
-     */
-    public function PaymentHistory(){
-        return $this->hasMany(UserPaymentHistory::class);
+
+
+    public function MpesaStkCallback(){
+        return $this->hasMany(MpesaStkCallback::class);
     }
 }

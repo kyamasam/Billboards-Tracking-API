@@ -2,84 +2,99 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PaymentProvidersCollection;
+use App\Http\Resources\PaymentProvidersResource;
 use App\PaymentProvider;
+use App\Traits\BaseTraits;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class PaymentProvidersController extends Controller
 {
+
+    use BaseTraits;
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return PaymentProvidersCollection
      */
     public function index()
     {
-        //
+        //anyone can access this
+        return new PaymentProvidersCollection(PaymentProvider::paginate());
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return PaymentProvidersResource
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            "provider_name" => "required",
+        ]);
+
+        $paymentProvider = new PaymentProvider();
+        $paymentProvider->provider_name = $request->provider_name;
+        $paymentProvider->save();
+
+        return new PaymentProvidersResource($paymentProvider);
+
+
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\PaymentProvider  $paymentProviders
-     * @return \Illuminate\Http\Response
+     * @param PaymentProvider $paymentProvider
+     * @return PaymentProvidersResource
      */
-    public function show(PaymentProvider $paymentProviders)
+
+    public function show(PaymentProvider $paymentProvider)
     {
-        //
+        return new PaymentProvidersResource($paymentProvider);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\PaymentProvider  $paymentProviders
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PaymentProvider $paymentProviders)
-    {
-        //
-    }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\PaymentProvider  $paymentProviders
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return PaymentProvidersResource|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function update(Request $request, PaymentProvider $paymentProviders)
+    public function update(Request $request, $id)
     {
-        //
+
+        try {
+            $paymentProvider = PaymentProvider::findOrFail($id);
+        }
+        catch (ModelNotFoundException $e){
+            return $this->ErrorReporter('Payment Provider Not Found', 'Payment Provider Id passed was not found in the database',422);
+        }
+
+        $paymentProvider->provider_name = $request->provider_name;
+        $paymentProvider->save();
+
+
+        return new PaymentProvidersResource($paymentProvider);
     }
 
+
     /**
-     * Remove the specified resource from storage.
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      *
-     * @param  \App\PaymentProvider  $paymentProviders
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(PaymentProvider $paymentProviders)
+
+
+    public function destroy($id)
     {
-        //
+        try {
+            PaymentProvider::findOrFail($id);
+        }
+        catch (ModelNotFoundException $e){
+            return $this->ErrorReporter('Payment Provider Not Found', 'Payment Provider Id passed was not found in the database',422);
+        }
+        PaymentProvider::destroy($id);
+        return $this->SuccessReporter('Record Deleted', 'Record was successfully deleted',200);
     }
 }

@@ -27,26 +27,6 @@ class UserAccountManagementController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * @param $id
@@ -100,11 +80,10 @@ class UserAccountManagementController extends Controller
             "last_name"=> "required|min:3",
             "middle_name"=> "required|min:3",
             "first_name"=> "required|min:3",
-            "msisdn"=> "required|numeric",
+            "msisdn"=> "required|numeric|unique:users,msisdn,\".$id",
             "avatar"=> "required|",
             "cover_photo"=> "required|",
         ]);
-
 
 
         $input =  $request->all();
