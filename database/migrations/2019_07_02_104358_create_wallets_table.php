@@ -17,7 +17,7 @@ class CreateWalletsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->references('id')->on('users');
             $table->float('credit_balance');
-            $table->string('credit_balance_verifier', 10);
+            $table->string('credit_balance_verifier');
             $table->timestamps();
         });
     }

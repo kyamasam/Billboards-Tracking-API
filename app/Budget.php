@@ -6,5 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Budget extends Model
 {
-    //
+    protected $fillable =[
+        'total_expenditure',
+        'start_date',
+        'end_date',
+    ];
+    /**
+     * UserResource associated with budget.
+     *
+     */
+    public function User(){
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Campaign associated with budget.
+     *
+     */
+    public function Campaign(){
+        return $this->hasOne(Campaign::class);
+    }
 }

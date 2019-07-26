@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCampaignArtworksTable extends Migration
+class CreateMpesaStkTriggersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateCampaignArtworksTable extends Migration
      */
     public function up()
     {
-        Schema::create('campaign_artworks', function (Blueprint $table) {
+        Schema::create('mpesa_stk_triggers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('campaign_id')->references('id')->on('campaigns');
-            $table->integer('artwork_id')->references('id')->on('artworks');
+            $table->string('merchant_request_id');
+            $table->string('checkout_request_id');
+            $table->string('response_code');
+            $table->text('response_description');
+            $table->text('customer_message');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateCampaignArtworksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('campaign_artworks');
+        Schema::dropIfExists('mpesa_stk_triggers');
     }
 }

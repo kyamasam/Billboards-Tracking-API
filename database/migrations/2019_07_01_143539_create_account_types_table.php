@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UserTypePermissions extends Migration
+class CreateAccountTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class UserTypePermissions extends Migration
      */
     public function up()
     {
-
-        Schema::create('user_type_permissions', function (Blueprint $table) {
+        Schema::create('account_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_type_id')->references('id')->on('user_types');
-            $table->integer('permission_id')->references('id')->on('permissions');
+            $table->string('name');
+            $table->text('description');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -30,6 +28,6 @@ class UserTypePermissions extends Migration
      */
     public function down()
     {
-         Schema::dropIfExists('user_type_permissions');
+        Schema::dropIfExists('account_types');
     }
 }
