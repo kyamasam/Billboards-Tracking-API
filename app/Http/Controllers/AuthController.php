@@ -29,8 +29,16 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
         $token = $user->createToken('AdkloutToken')->accessToken;
-        return response()->json(['token' => $token], 200);
-    }
+        return response()->json([
+            "type"=>'token',
+            "id"=>$user->id,
+            "attributes"=> [
+                'user_name' =>$request->user_name,
+                'token' => $token
+            ]
+
+        ],
+        200);    }
 
     public function login(Request $request){
         $user_credentials = [

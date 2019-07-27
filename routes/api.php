@@ -33,6 +33,8 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::resource('campaigns/status', 'CampaignStatusController');
         Route::resource('campaigns/artwork', 'ArtworkController');
         Route::resource('campaigns', 'CampaignController');
+        Route::get('campaigns/filter/{status}', 'CampaignController@campaignsFiltered');
+        Route::post('campaigns/update_status/{id}', 'CampaignController@updateCampaignStatus');
         Route::post('campaigns/locations', 'CampaignController@Locations');
         Route::get('campaigns/locations/{campaign_id}', 'CampaignController@SelectedLocations');
         Route::delete('campaigns/locations/remove_selections', 'CampaignController@removeSelections');

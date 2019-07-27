@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\MpesaStkCallbackResource;
 use App\Http\Resources\MpesaStkTriggerResource;
+use App\Jobs\SendEmailJob;
+use App\Mail\PaymentVerified;
 use App\MpesaStkCallback;
 use App\MpesaStkTrigger;
 use App\Traits\BaseTraits;
@@ -12,6 +14,7 @@ use App\Wallet;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class MpesaStkTriggerController extends Controller
 {
@@ -148,6 +151,7 @@ class MpesaStkTriggerController extends Controller
 
         //check that the transaction was a success
         if ($callback_record->resultCode == 0) {
+
             //now continue with execution;
             // the payment was successful therefore we can update users wallet
             $user_wallet = $user->Wallet();
@@ -162,7 +166,23 @@ class MpesaStkTriggerController extends Controller
                 $user_wallet->save();
                 //modify callback record
                 $callback_record->update(['user_id' => $user->id]);
+
+                //send email
+                //callback , user , payment_method
+                $payment_details['payment_details']=  $callback_record;
+                $payment_details['payment_method']='M-Pesa';
+                $payment_details['user']=$request->user();
+                //recipient
+                //mailer_class
+                $email_details['recipient']= $request->user();
+
+
+                $email_details['mailer_class']= new PaymentVerified($payment_details);
+
+                dispatch(new SendEmailJob($email_details));
+
                 return new MpesaStkCallbackResource($callback_record);
+
             }else{
                 // the user has a wallet
                 $user_wallet= $user_wallet->first();
@@ -175,6 +195,19 @@ class MpesaStkTriggerController extends Controller
                 $user_wallet->save();
                 //modify callback record
                 $callback_record->update(['user_id' => $user->id]);
+                //send email
+                //callback , user , payment_method
+                $payment_details['payment_details']=  $callback_record;
+                $payment_details['payment_method']='M-Pesa';
+                $payment_details['user']=$request->user();
+                //recipient
+                //mailer_class
+                $email_details['recipient']= $request->user();
+
+//                return response()->json([""=>$payment_details]);
+                $email_details['mailer_class']= new PaymentVerified($payment_details);
+
+                dispatch(new SendEmailJob($email_details));
                 return new MpesaStkCallbackResource($callback_record);
             }
 

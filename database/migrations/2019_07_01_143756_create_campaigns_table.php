@@ -18,7 +18,7 @@ class CreateCampaignsTable extends Migration
             $table->string('campaign_name');
             $table->integer('budget_id')->refernces('id')->on('budgets')->nullable();
             $table->integer('schedule_id')->refernces('id')->on('schedules')->nullable();
-            $table->integer('campaign_status')->refernces('id')->on('campaign_statuses')->nullable();
+            $table->integer('campaign_status')->refernces('id')->on('campaign_statuses')->default(1);
             $table->integer('owner_id')->refernces('id')->on('users');
             $table->timestamps();
         });
