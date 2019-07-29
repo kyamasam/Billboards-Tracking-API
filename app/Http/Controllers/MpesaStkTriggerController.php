@@ -9,12 +9,12 @@ use App\Mail\PaymentVerified;
 use App\MpesaStkCallback;
 use App\MpesaStkTrigger;
 use App\Traits\BaseTraits;
-use App\User;
 use App\Wallet;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class MpesaStkTriggerController extends Controller
 {
@@ -148,6 +148,10 @@ class MpesaStkTriggerController extends Controller
         }
 
 
+        $now = strtotime(date("h:i:sa"));
+        $receipt_file_name='Mpesa'.$now.'.'.'pdf';
+        $receipt_file_path='public/receipts/'.$receipt_file_name;
+        $absolute_file_path=env('MEDIA_SERVER_URL').'receipts/';
 
         //check that the transaction was a success
         if ($callback_record->resultCode == 0) {
@@ -180,6 +184,16 @@ class MpesaStkTriggerController extends Controller
                 $email_details['mailer_class']= new PaymentVerified($payment_details);
 
                 dispatch(new SendEmailJob($email_details));
+                //generate pdf
+                //generate pdf
+                $pdf = PDF::loadView('pdf.payment_receipt', array('payment_details' => $payment_details));
+                $receipt_file=  $pdf->download()->getOriginalContent();
+
+
+                Storage::disk('custom')->put($receipt_file_path,$receipt_file);
+                //add to database
+                $callback_record->update(['receipt' => $absolute_file_path.$receipt_file_name]);
+
 
                 return new MpesaStkCallbackResource($callback_record);
 
@@ -208,6 +222,17 @@ class MpesaStkTriggerController extends Controller
                 $email_details['mailer_class']= new PaymentVerified($payment_details);
 
                 dispatch(new SendEmailJob($email_details));
+
+                //generate pdf
+                $pdf = PDF::loadView('pdf.payment_receipt', array('payment_details' => $payment_details));
+                $receipt_file=  $pdf->download()->getOriginalContent();
+
+
+                Storage::disk('custom')->put($receipt_file_path,$receipt_file);
+                //add to database
+                $callback_record->update(['receipt' => $absolute_file_path.$receipt_file_name]);
+
+
                 return new MpesaStkCallbackResource($callback_record);
             }
 

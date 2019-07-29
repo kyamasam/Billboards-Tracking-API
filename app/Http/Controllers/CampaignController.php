@@ -295,7 +295,8 @@ class CampaignController extends Controller
 
         $email_details['mailer_class']= new CampaignStatusChanged($saved_campaign);
 
-        dispatch(new SendEmailJob($email_details));
+//        dispatch(new SendEmailJob($email_details));
+        SendEmailJob::dispatch($email_details);
 
         return response (new CampaignResource($campaign))->setStatusCode(200);
     }
