@@ -20,6 +20,7 @@ class MpesaStkTriggerController extends Controller
 {
     use BaseTraits;
 
+
     /**
      * generate auth token
      * @return mixed
@@ -55,9 +56,10 @@ class MpesaStkTriggerController extends Controller
     }
 
     /**
-     * @param $phone
-     * @param null $paybill
+     * @param Request $request
      * @return MpesaStkTriggerResource
+     * @throws \Illuminate\Validation\ValidationException
+     *
      */
     public function index(Request $request)
     {

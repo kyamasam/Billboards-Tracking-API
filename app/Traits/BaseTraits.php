@@ -3,8 +3,10 @@
 namespace App\Traits;
 
 use App\User;
+use App\Wallet;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Hash;
 
 trait BaseTraits
 {
@@ -125,6 +127,16 @@ trait BaseTraits
             return false;
         }
 
+    }
+    public function createUserWallet($user_id){
+        $user_wallet = new Wallet();
+        $user_wallet->user_id = $user_id;
+        //save the balance directly
+        $user_wallet->credit_balance =0;
+        $zero=0;
+        //create a credit verifier
+        $user_wallet->credit_balance_verifier=Hash::make($user_id.$zero);
+        $user_wallet->save();
     }
 
 }

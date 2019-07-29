@@ -164,19 +164,6 @@ class CampaignController extends Controller
                 return $this->ErrorReporter('Schedule Not found','the Schedule id passed was not found',422);
             }
         }
-        //todo: add admin check here
-        //if the campaign_status is passed check that campaign_status exists in the DB
-
-        if(isset($input['campaign_status'])){
-            if($this->ValidateAvailabilityModel(app("App\CampaignStatus"),$input['campaign_status'])){
-                $campaign->campaign_status= $input['campaign_status'];
-
-            }
-            else{
-                return $this->ErrorReporter('CampaignStatus Not found','the CampaignStatus id passed was not found',422);
-            }
-        }
-
         $campaign->save();
         return response (new CampaignResource($campaign))->setStatusCode(200);
     }
@@ -272,16 +259,52 @@ class CampaignController extends Controller
         $campaign = Campaign::find($id);
 
         //if the campaign_status is passed check that campaign_status exists in the DB
-
+        $passed_campaign_status = $input['campaign_status'];
+        $current_user = auth()->user();
         if(isset($input['campaign_status'])){
-            if($this->ValidateAvailabilityModel(app("App\CampaignStatus"),$input['campaign_status'])){
-                $campaign->update(array('campaign_status'=>$input['campaign_status']));
+            if($this->ValidateAvailabilityModel(app("App\CampaignStatus"),$passed_campaign_status)){
+
+                //charging the user if the status is set to active.
+                if((int)$passed_campaign_status===2){
+                    //check if the campaign is already active
+                    if((int)$campaign->campaign_status === 2){
+                        //the campaign is already activated. no need to activate it again
+                        return $this->ErrorReporter('Already active','Campaign is aready active',422);
+                    }
+
+
+                    $campaign_user_wallet=$campaign->Owner()->first()->Wallet()->get();
+                    //get schedules
+                    $schedules = $campaign->Schedule()->first()->ScheduleTimes()->get();
+                    $campaign_cost=0.0;
+                    //calculate the total cost of campaign
+                    foreach ($schedules as $schedule=>$key){
+                        $campaign_cost+=$schedules[$schedule]->total_cost;
+                    }
+                    $wallet_balance=$campaign_user_wallet[0]->credit_balance;
+                    //compare the balance in the users account
+                    if($wallet_balance>= $campaign_cost){
+                        //the user has enough money
+                        //deduct funds
+                        $new_wallet_balance= $wallet_balance-$campaign_cost;
+                        $campaign_user_wallet[0]->update(['credit_balance' => $new_wallet_balance]);
+                        $campaign->update(array('campaign_status'=>$passed_campaign_status));
+                    }else{
+                        //this user is a broke nigga
+                        return $this->ErrorReporter('Insufficient funds','CampaignStatus Could not be activated due to insufficient funds',422);
+                    }
+
+                }
+                else
+                {
+                    $campaign->update(array('campaign_status'=>$passed_campaign_status));
+                }
+
             }
             else{
                 return $this->ErrorReporter('CampaignStatus Not found','the CampaignStatus id passed was not found',422);
             }
         }
-
 
 
         $campaign->save();
@@ -294,8 +317,6 @@ class CampaignController extends Controller
         $email_details['recipient']= $request->user();
 
         $email_details['mailer_class']= new CampaignStatusChanged($saved_campaign);
-
-//        dispatch(new SendEmailJob($email_details));
         SendEmailJob::dispatch($email_details);
 
         return response (new CampaignResource($campaign))->setStatusCode(200);
