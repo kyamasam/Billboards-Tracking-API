@@ -18,9 +18,22 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
 
     Route::post('auth/login', 'AuthController@login');
     Route::post('auth/register', 'AuthController@register');
+
+
+    //password resets
+
+    Route::post('auth/password/create', 'PasswordResetController@create');
+    Route::get('auth/password/find/{token}', 'PasswordResetController@find');
+    Route::post('auth/password/reset', 'PasswordResetController@reset');
+
     //todo: make all the routes plural
+
+
     //routes that require authentication
+
     Route::middleware('auth:api')->group(function () {
+
+
 
         Route::get('auth/details', 'AuthController@details');
         Route::resource('account', 'UserAccountManagementController');
