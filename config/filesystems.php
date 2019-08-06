@@ -53,7 +53,7 @@ return [
          */
         'custom' => [
             'driver' => 'local',
-            'root' => storage_path('../../asset_manager/storage/app'),
+            'root' => storage_path(env('MEDIA_SERVER_RELATIVE_FOLDER')),
             'visibility' => 'public',
 
         ],
