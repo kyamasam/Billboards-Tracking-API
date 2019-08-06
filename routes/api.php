@@ -18,9 +18,22 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
 
     Route::post('auth/login', 'AuthController@login');
     Route::post('auth/register', 'AuthController@register');
+
+
+    //password resets
+
+    Route::post('auth/password/create', 'PasswordResetController@create');
+    Route::get('auth/password/find/{token}', 'PasswordResetController@find');
+    Route::post('auth/password/reset', 'PasswordResetController@reset');
+
     //todo: make all the routes plural
+
+
     //routes that require authentication
+
     Route::middleware('auth:api')->group(function () {
+
+
 
         Route::get('auth/details', 'AuthController@details');
         Route::resource('account', 'UserAccountManagementController');
@@ -33,6 +46,8 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::resource('campaigns/status', 'CampaignStatusController');
         Route::resource('campaigns/artwork', 'ArtworkController');
         Route::resource('campaigns', 'CampaignController');
+        Route::get('campaigns/filter/{status}', 'CampaignController@campaignsFiltered');
+        Route::post('campaigns/update_status/{id}', 'CampaignController@updateCampaignStatus');
         Route::post('campaigns/locations', 'CampaignController@Locations');
         Route::get('campaigns/locations/{campaign_id}', 'CampaignController@SelectedLocations');
         Route::delete('campaigns/locations/remove_selections', 'CampaignController@removeSelections');

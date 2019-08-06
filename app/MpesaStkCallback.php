@@ -19,6 +19,7 @@ class MpesaStkCallback extends Model
         'amount',
         'mpesaReceiptNumber',
         'phoneNumber',
+        'receipt',
         'user_id'
     ];
 

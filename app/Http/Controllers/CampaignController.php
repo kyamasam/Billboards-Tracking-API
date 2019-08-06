@@ -10,10 +10,14 @@ use App\CampaignStatus;
 use App\Http\Resources\BillboardCollection;
 use App\Http\Resources\CampaignCollection;
 use App\Http\Resources\CampaignResource;
+use App\Jobs\SendEmailJob;
+use App\Mail\CampaignStatusChanged;
 use App\Schedule;
 use App\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Traits\BaseTraits;
+use Illuminate\Support\Facades\Mail;
 use phpDocumentor\Reflection\Types\Null_;
 
 class CampaignController extends Controller
@@ -34,13 +38,15 @@ class CampaignController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @return CampaignResource|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      *
      */
 
     public function store(Request $request)
     {
+
+
         $this->validate($request, [
             "campaign_name" => "required|string",
             "owner_id" => "required|numeric",
@@ -54,38 +60,40 @@ class CampaignController extends Controller
         $campaign->campaign_name= $input['campaign_name'];
 
         //check that the owner exists
-        $owner = User::find($input['owner_id']);
-        if (!isset($owner)){
-            return $this->ErrorReporter('User Not Found', 'User Id passed was not found in the database',422);
+        if($this->ValidateAvailabilityModel(app("App\User"),$input['owner_id'])){
+            $campaign->owner_id= $input['owner_id'];
         }
-        $campaign->owner_id= $input['owner_id'];
+        else{
+            return $this->ErrorReporter('User Not found','the User id passed was not found',422);
+        }
+
 
         // if the budget_id  is passed, confirm that the budget actually exists
         if(isset($input['budget_id'])){
-            $budget = Budget::find($input['budget_id']);
-            return $this->ResourceNotFound($budget,'Budget');
+            //check that the budget exists
+            if($this->ValidateAvailabilityModel(app("App\Budget"),$input['budget_id'])){
+                $campaign->budget_id= $input['budget_id'];
+            }
+            else{
+                return $this->ErrorReporter('Budget Not found','the Budget id passed was not found',422);
+            }
         }
-        $campaign->budget_id= $input['budget_id'];
 
         //if the budget_id is passed check that budget exists
-        if(isset($input['budget_id'])){
-            $schedule = Schedule::find($input['schedule_id']);
-            return $this->ResourceNotFound($schedule,'Schedule');
+        if(isset($input['schedule_id'])){
+            //check that the budget exists
+            if($this->ValidateAvailabilityModel(app("App\Schedule"),$input['schedule_id'])){
+                //pass
+                $campaign->schedule_id= $input['schedule_id'];
+            }
+            else{
+                return $this->ErrorReporter('Schedule Not found','the Schedule id passed was not found',422);
+            }
         }
-        $campaign->schedule_id= $input['schedule_id'];
-
-        //if the campaign_status is passed check that campaign_status exists in the DB
-
-        if(isset($input['campaign_status'])){
-            $campaign_status = CampaignStatus::find($input['campaign_status']);
-            return $this->ResourceNotFound($campaign_status,'Campaign Status');
-        }
-        $campaign->campaign_status= $input['campaign_status'];
 
 
         $campaign->save();
-        return response (new CampaignResource($campaign))->setStatusCode(200);
-
+        return new CampaignResource(Campaign::find($campaign->id));
 
     }
 
@@ -114,7 +122,6 @@ class CampaignController extends Controller
     public function update(Request $request, $id)
     {
 
-
         $this->validate($request, [
             "campaign_name" => "required|string",
             "owner_id" => "required|numeric",
@@ -124,14 +131,39 @@ class CampaignController extends Controller
 
 
         $campaign = Campaign::find($id);
-
         $campaign->campaign_name= $input['campaign_name'];
-        $campaign->owner_id= $input['owner_id'];
-        $campaign->budget_id= $input['budget_id'];
-        $campaign->schedule_id= $input['schedule_id'];
-        $campaign->campaign_status= $input['campaign_status'];
+
+        //check that the owner exists
+        if($this->ValidateAvailabilityModel(app("App\User"),$input['owner_id'])){
+            $campaign->owner_id= $input['owner_id'];
+        }
+        else{
+            return $this->ErrorReporter('User Not found','the User id passed was not found',422);
+        }
 
 
+        // if the budget_id  is passed, confirm that the budget actually exists
+        if(isset($input['budget_id'])){
+            //check that the budget exists
+            if($this->ValidateAvailabilityModel(app("App\Budget"),$input['budget_id'])){
+                $campaign->budget_id= $input['budget_id'];
+            }
+            else{
+                return $this->ErrorReporter('Budget Not found','the Budget id passed was not found',422);
+            }
+        }
+
+        //if the budget_id is passed check that budget exists
+        if(isset($input['schedule_id'])){
+            //check that the budget exists
+            if($this->ValidateAvailabilityModel(app("App\Schedule"),$input['schedule_id'])){
+                //pass
+                $campaign->schedule_id= $input['schedule_id'];
+            }
+            else{
+                return $this->ErrorReporter('Schedule Not found','the Schedule id passed was not found',422);
+            }
+        }
         $campaign->save();
         return response (new CampaignResource($campaign))->setStatusCode(200);
     }
@@ -159,9 +191,6 @@ class CampaignController extends Controller
     public function SelectedLocations($campaign_id)
     {
         $selections= BillboardCampaign::where('campaign_id','=',$campaign_id)->pluck('billboard_id');
-
-//        return response()->json($selections);
-
         $billboards = Billboard::all()->whereIn('id',$selections);
         return new BillboardCollection($billboards);
     }
@@ -202,6 +231,95 @@ class CampaignController extends Controller
 
         BillboardCampaign::destroy([$prev_selections]);
         return $this->SuccessReporter('Records Deleted', 'Record was successfully deleted',200);
+    }
+
+    public function campaignsFiltered(int $status=1){
+        $campaign_select = Campaign::where('campaign_status','=',$status)->paginate();
+
+        return new CampaignCollection($campaign_select);
+    }
+
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
+     *
+     */
+    public function updateCampaignStatus(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            "campaign_status" => "required|numeric",
+        ]);
+
+        $input = $request->all();
+
+        $campaign = Campaign::find($id);
+
+        //if the campaign_status is passed check that campaign_status exists in the DB
+        $passed_campaign_status = $input['campaign_status'];
+        $current_user = auth()->user();
+        if(isset($input['campaign_status'])){
+            if($this->ValidateAvailabilityModel(app("App\CampaignStatus"),$passed_campaign_status)){
+
+                //charging the user if the status is set to active.
+                if((int)$passed_campaign_status===2){
+                    //check if the campaign is already active
+                    if((int)$campaign->campaign_status === 2){
+                        //the campaign is already activated. no need to activate it again
+                        return $this->ErrorReporter('Already active','Campaign is aready active',422);
+                    }
+
+
+                    $campaign_user_wallet=$campaign->Owner()->first()->Wallet()->get();
+                    //get schedules
+                    $schedules = $campaign->Schedule()->first()->ScheduleTimes()->get();
+                    $campaign_cost=0.0;
+                    //calculate the total cost of campaign
+                    foreach ($schedules as $schedule=>$key){
+                        $campaign_cost+=$schedules[$schedule]->total_cost;
+                    }
+                    $wallet_balance=$campaign_user_wallet[0]->credit_balance;
+                    //compare the balance in the users account
+                    if($wallet_balance>= $campaign_cost){
+                        //the user has enough money
+                        //deduct funds
+                        $new_wallet_balance= $wallet_balance-$campaign_cost;
+                        $campaign_user_wallet[0]->update(['credit_balance' => $new_wallet_balance]);
+                        $campaign->update(array('campaign_status'=>$passed_campaign_status));
+                    }else{
+                        //this user is a broke nigga
+                        return $this->ErrorReporter('Insufficient funds','CampaignStatus Could not be activated due to insufficient funds',422);
+                    }
+
+                }
+                else
+                {
+                    $campaign->update(array('campaign_status'=>$passed_campaign_status));
+                }
+
+            }
+            else{
+                return $this->ErrorReporter('CampaignStatus Not found','the CampaignStatus id passed was not found',422);
+            }
+        }
+
+
+        $campaign->save();
+
+        $saved_campaign['campaign']=Campaign::find($id);
+        $saved_campaign['user']=$request->user();
+        $saved_campaign['status']=Campaign::find($id)->CampaignStatus()->first();
+        //recipient
+        //mailer_class
+        $email_details['recipient']= $request->user();
+
+        $email_details['mailer_class']= new CampaignStatusChanged($saved_campaign);
+        SendEmailJob::dispatch($email_details);
+
+        return response (new CampaignResource($campaign))->setStatusCode(200);
     }
 
 }

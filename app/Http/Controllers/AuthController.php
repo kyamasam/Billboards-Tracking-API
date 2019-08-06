@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Traits\BaseTraits;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use phpDocumentor\Reflection\Types\Integer;
 
 class AuthController extends Controller
+
 {
+    use BaseTraits;
     public function register(Request $request ){
 
         //todo: validate length of phone numbers
@@ -28,9 +31,21 @@ class AuthController extends Controller
             'msisdn' => $request->msisdn,
             'password' => Hash::make($request->password),
         ]);
+
         $token = $user->createToken('AdkloutToken')->accessToken;
-        return response()->json(['token' => $token], 200);
-    }
+
+        //create a user wallet
+        $this->createUserWallet($user->id);
+        return response()->json([
+            "type"=>'token',
+            "id"=>$user->id,
+            "attributes"=> [
+                'user_name' =>$request->user_name,
+                'token' => $token
+            ]
+
+        ],
+        200);    }
 
     public function login(Request $request){
         $user_credentials = [

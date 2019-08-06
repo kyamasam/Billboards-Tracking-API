@@ -23,6 +23,7 @@ class CreateMpesaStkCallbacksTable extends Migration
             $table->string('mpesaReceiptNumber')->nullable();
             $table->string('phoneNumber')->nullable();
             $table->integer('user_id')->nullable();
+            $table->string('receipt')->nullable();
             $table->timestamps();
         });
     }

@@ -3,7 +3,10 @@
 namespace App\Traits;
 
 use App\User;
+use App\Wallet;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Hash;
 
 trait BaseTraits
 {
@@ -109,13 +112,31 @@ trait BaseTraits
      */
 
     public function ValidateAvailability(Model $model,$id, $ModelName){
-        $result = $model::find($id);
-        if (!isset($result)){
+        try{
+            $result = $model::find($id);
+            return true;
+        }catch (ModelNotFoundException $exception){
             return $this->ErrorReporter($ModelName.' Not Found', $ModelName.' Id passed was not found in the database',422);
         }
-        else{
+    }
+    public function ValidateAvailabilityModel(Model $model,$id){
+        $result=$model::find($id);
+        if(isset($result)){
             return true;
+        }else{
+            return false;
         }
+
+    }
+    public function createUserWallet($user_id){
+        $user_wallet = new Wallet();
+        $user_wallet->user_id = $user_id;
+        //save the balance directly
+        $user_wallet->credit_balance =0;
+        $zero=0;
+        //create a credit verifier
+        $user_wallet->credit_balance_verifier=Hash::make($user_id.$zero);
+        $user_wallet->save();
     }
 
 }

@@ -8,6 +8,8 @@ use App\Http\Resources\ArtworkCollection;
 use App\Http\Resources\ArtworkResource;
 use Illuminate\Http\Request;
 use App\Traits\BaseTraits;
+use Illuminate\Support\Facades\Storage;
+
 class ArtworkController extends Controller
 {
    use BaseTraits;
@@ -36,7 +38,7 @@ class ArtworkController extends Controller
         $this->validate($request, [
             "height" => "required|numeric",
             "width" => "required|numeric",
-            "image_src" => "required|string",
+            "image_src" => "required|file",
             "campaign_id" => "required|numeric",
             "billboard_id" => "required|numeric",
         ]);
@@ -57,15 +59,18 @@ class ArtworkController extends Controller
             return $billboard_available;
         }
 
-
-
+        $now = strtotime(date("h:i:sa"));
 
         $artwork = new Artwork();
         $artwork->height= $input['height'];
         $artwork->width= $input['width'];
         $artwork->campaign_id= $input['campaign_id'];
         $artwork->billboard_id= $input['billboard_id'];
-        $artwork->image_src= $input['image_src'];
+        $artwork_image_ext=$request->file('image_src')->getClientOriginalExtension();
+        $artwork_image_file = $request->file('image_src');
+        $artwork_image_file_name= 'art'.$request->campaign_id.$now.'.'.$artwork_image_ext;
+        Storage::disk('custom')->putFileAs('public/artwork',$artwork_image_file,$artwork_image_file_name);
+        $artwork->image_src= env('MEDIA_SERVER_URL').'artwork/'.$artwork_image_file_name;
 
 
         $artwork->save();
@@ -100,7 +105,7 @@ class ArtworkController extends Controller
         $this->validate($request, [
             "height" => "required|numeric",
             "width" => "required|numeric",
-            "image_src" => "required|string",
+            "image_src" => "required|file",
             "campaign_id" => "required|numeric",
             "billboard_id" => "required|numeric",
         ]);
@@ -121,15 +126,18 @@ class ArtworkController extends Controller
             return $billboard_available;
         }
 
-
-
+        $now = strtotime(date("h:i:sa"));
 
         $artwork = Artwork::find($id);
         $artwork->height= $input['height'];
         $artwork->width= $input['width'];
         $artwork->campaign_id= $input['campaign_id'];
         $artwork->billboard_id= $input['billboard_id'];
-        $artwork->image_src= $input['image_src'];
+        $artwork_image_ext=$request->file('image_src')->getClientOriginalExtension();
+        $artwork_image_file = $request->file('image_src');
+        $artwork_image_file_name= 'art'.$request->campaign_id.$now.'.'.$artwork_image_ext;
+        Storage::disk('custom')->putFileAs('public/artwork',$artwork_image_file,$artwork_image_file_name);
+        $artwork->image_src= env('MEDIA_SERVER_URL').'artwork/'.$artwork_image_file_name;
 
 
         $artwork->save();
