@@ -69,7 +69,7 @@ class ArtworkController extends Controller
         $artwork_image_ext=$request->file('image_src')->getClientOriginalExtension();
         $artwork_image_file = $request->file('image_src');
         $artwork_image_file_name= 'art'.$request->campaign_id.$now.'.'.$artwork_image_ext;
-        Storage::disk('custom')->putFileAs('public/artwork',$artwork_image_file,$artwork_image_file_name);
+        Storage::disk('local')->putFileAs('public/artwork',$artwork_image_file,$artwork_image_file_name);
         $artwork->image_src= env('MEDIA_SERVER_URL').'artwork/'.$artwork_image_file_name;
 
 
@@ -136,7 +136,7 @@ class ArtworkController extends Controller
         $artwork_image_ext=$request->file('image_src')->getClientOriginalExtension();
         $artwork_image_file = $request->file('image_src');
         $artwork_image_file_name= 'art'.$request->campaign_id.$now.'.'.$artwork_image_ext;
-        Storage::disk('custom')->putFileAs('public/artwork',$artwork_image_file,$artwork_image_file_name);
+        Storage::disk('local')->putFileAs('public/artwork',$artwork_image_file,$artwork_image_file_name);
         $artwork->image_src= env('MEDIA_SERVER_URL').'artwork/'.$artwork_image_file_name;
 
 

@@ -192,7 +192,7 @@ class MpesaStkTriggerController extends Controller
                 $receipt_file=  $pdf->download()->getOriginalContent();
 
 
-                Storage::disk('custom')->put($receipt_file_path,$receipt_file);
+                Storage::disk('local')->put($receipt_file_path,$receipt_file);
                 //add to database
                 $callback_record->update(['receipt' => $absolute_file_path.$receipt_file_name]);
 
@@ -230,7 +230,7 @@ class MpesaStkTriggerController extends Controller
                 $receipt_file=  $pdf->download()->getOriginalContent();
 
 
-                Storage::disk('custom')->put($receipt_file_path,$receipt_file);
+                Storage::disk('local')->put($receipt_file_path,$receipt_file);
                 //add to database
                 $callback_record->update(['receipt' => $absolute_file_path.$receipt_file_name]);
 
