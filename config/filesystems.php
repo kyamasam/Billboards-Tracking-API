@@ -53,7 +53,8 @@ return [
          */
         'custom' => [
             'driver' => 'local',
-            'root' =>storage_path('/var/www/adklout-asset-server/public_html/public'),
+//            'root' =>storage_path('/var/www/adklout-asset-server/public_html/public'),
+            'root' =>storage_path('../../assets'),
             'visibility' => 'public',
 
         ],
