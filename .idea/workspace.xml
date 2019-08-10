@@ -45,7 +45,7 @@
           <entry key="json" value="1" />
           <entry key="log" value="1" />
           <entry key="md" value="1" />
-          <entry key="php" value="400" />
+          <entry key="php" value="402" />
           <entry key="png" value="1" />
         </counts>
       </usages-collector>
@@ -58,7 +58,7 @@
           <entry key="JavaScript" value="1" />
           <entry key="Log" value="1" />
           <entry key="Markdown" value="1" />
-          <entry key="PHP" value="391" />
+          <entry key="PHP" value="393" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -66,14 +66,14 @@
         <counts>
           <entry key="dummy" value="126" />
           <entry key="env" value="229" />
-          <entry key="php" value="24359" />
+          <entry key="php" value="24424" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="229" />
           <entry key="Blade" value="1192" />
-          <entry key="PHP" value="23167" />
+          <entry key="PHP" value="23232" />
           <entry key="PLAIN_TEXT" value="126" />
         </counts>
       </usages-collector>
@@ -98,8 +98,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/MpesaStkTriggerController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="187" column="35" lean-forward="true" selection-start-line="187" selection-start-column="35" selection-end-line="187" selection-end-column="35" />
+            <state relative-caret-position="404">
+              <caret line="250" column="21" selection-start-line="250" selection-start-column="13" selection-end-line="250" selection-end-column="21" />
               <folding>
                 <element signature="e#40#88#0#PHP" expanded="true" />
               </folding>
@@ -107,20 +107,29 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/api.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="58" column="40" selection-start-line="58" selection-start-column="34" selection-end-line="58" selection-end-column="40" />
+            <state relative-caret-position="384">
+              <caret line="59" column="42" selection-start-line="59" selection-start-column="33" selection-end-line="59" selection-end-column="42" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Jobs/SendEmailJob.php">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Mail/SendMailable.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="35" column="7" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
+            <state relative-caret-position="330">
+              <caret line="30" column="28" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Mail/PaymentVerified.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="31" column="48" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -172,7 +181,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Http/Controllers/UserAccountManagementController.php" />
         <option value="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" />
         <option value="$PROJECT_DIR$/app/MpesaStkResponse.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_07_25_150622_create_mpesa_stk_responses_table.php" />
@@ -221,8 +229,9 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/BillboardController.php" />
         <option value="$PROJECT_DIR$/.env" />
         <option value="&lt;ee6404a2-659c-4a9c-8935-194cd463f58c&gt;/adklout-api/public_html/app/Http/Controllers/MpesaStkTriggerController.php" />
-        <option value="$PROJECT_DIR$/routes/api.php" />
+        <option value="$PROJECT_DIR$/app/Mail/SendMailable.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/MpesaStkTriggerController.php" />
+        <option value="$PROJECT_DIR$/routes/api.php" />
       </list>
     </option>
   </component>
@@ -378,14 +387,18 @@
               <item name="adklout_api" type="b2602c69:ProjectViewProjectNode" />
               <item name="adklout_api" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Mail" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="adklout_api" type="b2602c69:ProjectViewProjectNode" />
               <item name="adklout_api" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="adklout_api" type="b2602c69:ProjectViewProjectNode" />
+              <item name="adklout_api" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -482,18 +495,18 @@
       <workItem from="1564335342921" duration="4308000" />
       <workItem from="1564381336424" duration="18237000" />
       <workItem from="1564806047610" duration="1666000" />
-      <workItem from="1565418483411" duration="8793000" />
+      <workItem from="1565418483411" duration="9428000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="275474000" />
+    <option name="totallyTimeSpent" value="276109000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.31426984" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.31426984" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -510,7 +523,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.3723404" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.3723404" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -547,9 +560,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Http/Resources/CampaignStatusResource.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Resources/MpesaStkCallbackCollection.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -594,13 +604,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="28" column="10" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Mail/PaymentVerified.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="31" column="48" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="48" />
         </state>
       </provider>
     </entry>
@@ -802,13 +805,6 @@
     <entry file="file://$PROJECT_DIR$/resources/js/app.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="58" column="40" selection-start-line="58" selection-start-column="34" selection-end-line="58" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="338">
@@ -816,20 +812,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Jobs/SendEmailJob.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="24" column="29" lean-forward="true" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Mail/PaymentVerified.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="31" column="48" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Mail/SendMailable.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="30" column="28" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/MpesaStkTriggerController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="187" column="35" lean-forward="true" selection-start-line="187" selection-start-column="35" selection-end-line="187" selection-end-column="35" />
+        <state relative-caret-position="404">
+          <caret line="250" column="21" selection-start-line="250" selection-start-column="13" selection-end-line="250" selection-end-column="21" />
           <folding>
             <element signature="e#40#88#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Jobs/SendEmailJob.php">
+    <entry file="file://$PROJECT_DIR$/routes/api.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="35" column="7" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
+        <state relative-caret-position="384">
+          <caret line="59" column="42" selection-start-line="59" selection-start-column="33" selection-end-line="59" selection-end-column="42" />
         </state>
       </provider>
     </entry>
