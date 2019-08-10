@@ -250,6 +250,8 @@ class MpesaStkTriggerController extends Controller
 
     function EmailTry(){
         Mail::to('samuelkyama102@gmail.com')->send(new SendMailable());
-        return 'Email was sent';
+
+
+        return response()->json(["data"=>"Email was sent"]);
     }
 }
