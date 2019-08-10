@@ -113,7 +113,6 @@ class MpesaStkTriggerController extends Controller
         $mpesa_stk_response->response_description = $json_data['ResponseDescription'];
         $mpesa_stk_response->customer_message = $json_data['CustomerMessage'];
 
-        return response()->json($merchant);
         $mpesa_stk_response->save();
 
         return new MpesaStkTriggerResource($mpesa_stk_response);
