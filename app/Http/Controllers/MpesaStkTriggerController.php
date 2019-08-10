@@ -6,6 +6,7 @@ use App\Http\Resources\MpesaStkCallbackResource;
 use App\Http\Resources\MpesaStkTriggerResource;
 use App\Jobs\SendEmailJob;
 use App\Mail\PaymentVerified;
+use App\Mail\SendMailable;
 use App\MpesaStkCallback;
 use App\MpesaStkTrigger;
 use App\Traits\BaseTraits;
@@ -13,6 +14,7 @@ use App\Wallet;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 
@@ -243,5 +245,11 @@ class MpesaStkTriggerController extends Controller
         } else {
             return $this->ErrorReporter('Payment could not be processed', $callback_record->resultDesc, 422);
         }
+    }
+
+
+    function EmailTry(){
+        Mail::to('samuelkyama102@gmail.com')->send(new SendMailable());
+        return 'Email was sent';
     }
 }
