@@ -90,7 +90,7 @@ class MpesaStkTriggerController extends Controller
             'PartyA' => $phone,
             'PartyB' => $business_short_code,
             'PhoneNumber' => $phone,
-            'CallBackURL' => 'http://sefapay.skalityprojects.com/stkpush_callback.php',
+            'CallBackURL' => env('MPESA_CALLBACK_URL'),
             'AccountReference' => 'ref',
             'TransactionDesc' => 'transaction'
 
