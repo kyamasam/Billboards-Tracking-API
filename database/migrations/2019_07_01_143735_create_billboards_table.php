@@ -16,6 +16,7 @@ class CreateBillboardsTable extends Migration
         Schema::create('billboards', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->float('display_duration');
+            $table->string('location_name');
             $table->decimal('location_lat', 10, 7);
             $table->decimal('location_long', 10, 7);
             $table->enum('placement', ['left', 'right']);

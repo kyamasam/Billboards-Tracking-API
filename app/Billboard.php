@@ -10,6 +10,7 @@ class Billboard extends Model
     use SoftDeletes;
     protected $fillable =[
         'display_duration',
+        'location_name',
         'location_lat',
         'location_long',
         'placement',

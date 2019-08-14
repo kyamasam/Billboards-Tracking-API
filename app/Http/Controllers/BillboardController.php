@@ -38,6 +38,7 @@ class BillboardController extends Controller
     {
         $this->validate($request, [
             "display_duration" => "required",
+            "location_name" => "required",
             "location_lat" => "required",
             "location_long" => "required",
             "placement" => "required",
@@ -55,6 +56,7 @@ class BillboardController extends Controller
 
         $billboard = new Billboard;
         $billboard->display_duration = $input['display_duration'];
+        $billboard->location_name = $input['location_name'];
         $billboard->location_lat = $input['location_lat'];
         $billboard->location_long = $input['location_long'];
         $billboard->placement = $input['placement'];
@@ -107,9 +109,9 @@ class BillboardController extends Controller
     public function update(Request $request, $id)
     {
 
-        //todo find a way of converting psd to png
         $this->validate($request, [
             "display_duration" => "required",
+            "location_name" => "required",
             "location_lat" => "required",
             "location_long" => "required",
             "placement" => "required",
@@ -127,6 +129,7 @@ class BillboardController extends Controller
         $now = strtotime(date("h:i:sa"));
 
         $billboard->display_duration = $input['display_duration'];
+        $billboard->location_name = $input['location_name'];
         $billboard->location_lat = $input['location_lat'];
         $billboard->location_long = $input['location_long'];
         $billboard->placement = $input['placement'];
