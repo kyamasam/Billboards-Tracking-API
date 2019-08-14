@@ -39,7 +39,7 @@ class ScheduleController extends Controller
         foreach ($schedule_times as &$schedule_time){
             $schedule_time['schedule_id']=$schedule_id;
         }
-        $complete_schedule_times = ScheduleTimes::insert($schedule_times);
+        ScheduleTimes::insert($schedule_times);
         return new ScheduleResource($schedule);
 
 
