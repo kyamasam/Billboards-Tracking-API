@@ -112,12 +112,14 @@ trait BaseTraits
      */
 
     public function ValidateAvailability(Model $model,$id, $ModelName){
-        try{
-            $result = $model::find($id);
-            return true;
-        }catch (ModelNotFoundException $exception){
-            return $this->ErrorReporter($ModelName.' Not Found', $ModelName.' Id passed was not found in the database',422);
-        }
+       $data = $model::find($id);
+       if(isset($data)){
+           $message=true;
+       }else{
+           $message= $this->ErrorReporter($ModelName.' Not Found', $ModelName.' Id passed was not found in the database',422);
+       }
+       return $message;
+
     }
     public function ValidateAvailabilityModel(Model $model,$id){
         $result=$model::find($id);

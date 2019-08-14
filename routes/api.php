@@ -41,10 +41,12 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::put('account/update/{id}', 'UserAccountManagementController@admin_update');
 
         Route::resource('billboards', 'BillboardController');
+        Route::post('billboards/{id}/update_image', 'BillboardController@update_image');
         Route::resource('campaigns/budgets', 'BudgetController');
         Route::resource('campaigns/schedules', 'ScheduleController');
         Route::resource('campaigns/status', 'CampaignStatusController');
         Route::resource('campaigns/artwork', 'ArtworkController');
+        Route::post('campaigns/artwork/{id}/update_image', 'ArtworkController@update_image');
         Route::resource('campaigns', 'CampaignController');
         Route::get('campaigns/filter/{status}', 'CampaignController@campaignsFiltered');
         Route::post('campaigns/update_status/{id}', 'CampaignController@updateCampaignStatus');

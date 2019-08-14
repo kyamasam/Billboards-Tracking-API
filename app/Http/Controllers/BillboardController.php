@@ -115,7 +115,7 @@ class BillboardController extends Controller
             "location_lat" => "required",
             "location_long" => "required",
             "placement" => "required",
-            "billboard_picture" => "required|mimes:jpg,jpeg,png,bmp,tiff |max:4096",
+//            "billboard_picture" => "required|mimes:jpg,jpeg,png,bmp,tiff |max:4096",
             "average_daily_views" => "required",
             "definition" => "required",
             "dimensions_width" => "required",
@@ -133,11 +133,6 @@ class BillboardController extends Controller
         $billboard->location_lat = $input['location_lat'];
         $billboard->location_long = $input['location_long'];
         $billboard->placement = $input['placement'];
-        $billboard_picture_ext=$request->file('billboard_picture')->getClientOriginalExtension();
-        $billboard_picture_file = $request->file('billboard_picture');
-        $billboard_picture_file_name= 'bb'.$request->location_lat.$now.'.'.$billboard_picture_ext;
-        Storage::disk('local')->putFileAs('public/billboards',$billboard_picture_file,$billboard_picture_file_name);
-        $billboard->billboard_picture = env('MEDIA_SERVER_URL').'billboards/'.$billboard_picture_file_name;
         $billboard->average_daily_views = $input['average_daily_views'];
         $billboard->definition = $input['definition'];
         $billboard->dimensions_width = $input['dimensions_width'];
@@ -146,6 +141,30 @@ class BillboardController extends Controller
 
         $billboard->save();
         return response (new BillboardResource($billboard))->setStatusCode(200);
+    }
+    public function update_image(Request $request, $id){
+        $this->validate($request, [
+            "billboard_picture" => "required|mimes:jpg,jpeg,png,bmp,tiff |max:4096",
+        ]);
+
+        $billboard = Billboard::find($id);
+        $now = strtotime(date("h:i:sa"));
+
+        //get the original file
+        $original_image_path = $billboard->billboard_picture;
+        //clean up path of old billboard image
+        $original_image_path = str_replace(env('MEDIA_SERVER_URL'),"",$original_image_path);
+        //delete existing billboard picture
+        File::delete(env('MEDIA_SERVER_FOLDER').$original_image_path);
+
+        $billboard_picture_ext=$request->file('billboard_picture')->getClientOriginalExtension();
+        $billboard_picture_file = $request->file('billboard_picture');
+        $billboard_picture_file_name= 'bb'.$request->location_lat.$now.'.'.$billboard_picture_ext;
+        Storage::disk('local')->putFileAs('public/billboards',$billboard_picture_file,$billboard_picture_file_name);
+        $billboard->billboard_picture = env('MEDIA_SERVER_URL').'billboards/'.$billboard_picture_file_name;
+        $billboard->save();
+        return response (new BillboardResource($billboard))->setStatusCode(200);
+
     }
 
 

@@ -9,6 +9,7 @@ use App\Http\Resources\ArtworkResource;
 use Illuminate\Http\Request;
 use App\Traits\BaseTraits;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class ArtworkController extends Controller
 {
@@ -105,7 +106,7 @@ class ArtworkController extends Controller
         $this->validate($request, [
             "height" => "required|numeric",
             "width" => "required|numeric",
-            "image_src" => "required|file",
+//            "image_src" => "required|file",
             "campaign_id" => "required|numeric",
             "billboard_id" => "required|numeric",
         ]);
@@ -126,22 +127,41 @@ class ArtworkController extends Controller
             return $billboard_available;
         }
 
-        $now = strtotime(date("h:i:sa"));
 
         $artwork = Artwork::find($id);
         $artwork->height= $input['height'];
         $artwork->width= $input['width'];
         $artwork->campaign_id= $input['campaign_id'];
         $artwork->billboard_id= $input['billboard_id'];
+
+
+        $artwork->save();
+        return response (new ArtworkResource($artwork))->setStatusCode(200);
+    }
+
+    public function update_image(Request $request, $id){
+        $now = strtotime(date("h:i:sa"));
+        $this->validate($request, [
+            "image_src" => "required|file",
+        ]);
+
+        $artwork = Artwork::find($id);
+        //get the original file
+        $original_image_path = $artwork->image_src;
+
+        //clean up path of old artwork
+        $original_image_path = str_replace(env('MEDIA_SERVER_URL'),"",$original_image_path);
+        //delete existing artwork
+        File::delete(env('MEDIA_SERVER_FOLDER').$original_image_path);
+
         $artwork_image_ext=$request->file('image_src')->getClientOriginalExtension();
         $artwork_image_file = $request->file('image_src');
         $artwork_image_file_name= 'art'.$request->campaign_id.$now.'.'.$artwork_image_ext;
         Storage::disk('local')->putFileAs('public/artwork',$artwork_image_file,$artwork_image_file_name);
         $artwork->image_src= env('MEDIA_SERVER_URL').'artwork/'.$artwork_image_file_name;
-
-
         $artwork->save();
         return response (new ArtworkResource($artwork))->setStatusCode(200);
+
     }
 
 

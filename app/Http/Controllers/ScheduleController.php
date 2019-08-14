@@ -42,7 +42,6 @@ class ScheduleController extends Controller
         ScheduleTimes::insert($schedule_times);
         return new ScheduleResource($schedule);
 
-
     }
 
     /**
