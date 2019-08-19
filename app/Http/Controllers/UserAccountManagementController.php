@@ -80,7 +80,7 @@ class UserAccountManagementController extends Controller
             "last_name"=> "required|min:3",
             "middle_name"=> "required|min:3",
             "first_name"=> "required|min:3",
-            "msisdn"=> "required|numeric|unique:users,msisdn,\".$id",
+            "msisdn"=> "required|numeric|unique:users,msisdn,".$id,
             "avatar"=> "required|",
             "cover_photo"=> "required|",
         ]);
