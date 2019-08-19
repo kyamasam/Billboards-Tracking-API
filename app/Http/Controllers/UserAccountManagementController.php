@@ -15,7 +15,7 @@ class UserAccountManagementController extends Controller
     use BaseTraits;
 
     /**
-     *
+     * @return UserCollection|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function index()
     {
