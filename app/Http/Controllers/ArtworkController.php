@@ -88,9 +88,9 @@ class ArtworkController extends Controller
 
     public function show($id)
     {
-        $artwork = Artwork::find($id)->with(['Campaigns','Billboards'])->first();
+        $artwork = Artwork::with(['Campaigns','Billboards'])->get()->keyBy('id');
 
-        return new ArtworkResource($artwork);
+        return new ArtworkResource($artwork[$id]);
     }
 
     /**
