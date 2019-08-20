@@ -53,7 +53,7 @@ class WalletController extends Controller
 
     public function AllTransactions()
     {
-        $transactions = MpesaStkCallback::all();
+        $transactions = MpesaStkCallback::paginate();
         return new MpesaStkCallbackCollection($transactions);
 //        if ($this->IsAdmin((int)auth()->user()->id)) {
 //
