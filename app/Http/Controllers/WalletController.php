@@ -54,7 +54,7 @@ class WalletController extends Controller
     public function AllTransactions()
     {
         if ($this->IsAdmin((int)auth()->user()->id)) {
-            $transactions = MpesaStkCallback::all()->paginate();
+            $transactions = MpesaStkCallback::paginate();
             return new MpesaStkCallbackCollection($transactions);
         } else {
             return $this->ErrorReporter("Unauthorized", "You Do not have rights to access this resource", 401);
