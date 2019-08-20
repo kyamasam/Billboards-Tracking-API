@@ -54,6 +54,7 @@ class WalletController extends Controller
     public function AllTransactions()
     {
         $transactions = MpesaStkCallback::all();
+        return response()->json(["data"=>$transactions]);
         return new MpesaStkCallbackCollection($transactions);
 //        if ($this->IsAdmin((int)auth()->user()->id)) {
 //            $transactions = MpesaStkCallback::all();
