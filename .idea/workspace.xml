@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="675e9e6e-4174-4e3f-bd7d-f9cb211f14d1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-    </list>
+    <list default="true" id="675e9e6e-4174-4e3f-bd7d-f9cb211f14d1" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,14 +66,14 @@
         <counts>
           <entry key="dummy" value="126" />
           <entry key="env" value="242" />
-          <entry key="php" value="26910" />
+          <entry key="php" value="26919" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="242" />
           <entry key="Blade" value="1192" />
-          <entry key="PHP" value="25718" />
+          <entry key="PHP" value="25727" />
           <entry key="PLAIN_TEXT" value="126" />
         </counts>
       </usages-collector>
@@ -93,7 +90,7 @@
         <entry file="file://$PROJECT_DIR$/routes/api.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="350">
-              <caret line="68" column="55" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="55" />
+              <caret line="68" column="59" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -101,8 +98,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/WalletController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="57" column="65" selection-start-line="57" selection-start-column="65" selection-end-line="57" selection-end-column="65" />
+            <state relative-caret-position="291">
+              <caret line="56" column="25" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="25" />
               <folding>
                 <element signature="e#40#90#0#PHP" expanded="true" />
               </folding>
@@ -297,8 +294,8 @@
         <option value="$PROJECT_DIR$/app/Billboard.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_07_01_143735_create_billboards_table.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/BillboardController.php" />
-        <option value="$PROJECT_DIR$/routes/api.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" />
+        <option value="$PROJECT_DIR$/routes/api.php" />
       </list>
     </option>
   </component>
@@ -562,12 +559,12 @@
       <workItem from="1565728407787" duration="1183000" />
       <workItem from="1565772886410" duration="11154000" />
       <workItem from="1566209449411" duration="1994000" />
-      <workItem from="1566246000781" duration="17471000" />
+      <workItem from="1566246000781" duration="18130000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="309984000" />
+    <option name="totallyTimeSpent" value="310643000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
@@ -589,7 +586,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.42234042" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.36276597" />
       <window_info anchor="bottom" id="File Transfer" order="12" weight="0.32978722" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -951,14 +948,14 @@
     <entry file="file://$PROJECT_DIR$/routes/api.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="350">
-          <caret line="68" column="55" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="55" />
+          <caret line="68" column="59" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="59" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/WalletController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="57" column="65" selection-start-line="57" selection-start-column="65" selection-end-line="57" selection-end-column="65" />
+        <state relative-caret-position="291">
+          <caret line="56" column="25" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="25" />
           <folding>
             <element signature="e#40#90#0#PHP" expanded="true" />
           </folding>
