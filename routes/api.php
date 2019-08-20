@@ -62,6 +62,7 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::resource('payments','PaymentProvidersController');
         Route::post('payments/stk/', 'MpesaStkTriggerController@index');
         Route::post('payments/stk/verify', 'MpesaStkTriggerController@verify');
+        Route::get('payments/transactions','WalletController@all_transactions');
 
         //user wallet
         Route::get('wallets','WalletController@index');

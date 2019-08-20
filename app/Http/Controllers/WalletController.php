@@ -7,9 +7,11 @@ use App\Http\Resources\WalletResource;
 use App\MpesaStkCallback;
 use App\Wallet;
 use Illuminate\Support\Facades\Hash;
+use App\Traits\BaseTraits;
 
 class WalletController extends Controller
 {
+    use BaseTraits;
     public function index(){
         $user = auth()->user();
         $user_wallet = $user->Wallet();
@@ -47,5 +49,15 @@ class WalletController extends Controller
         $transactions = MpesaStkCallback::where('user_id','=',$user->id)->paginate();
 
         return new MpesaStkCallbackCollection($transactions);
+    }
+
+    public function all_transactions()
+    {
+        if ($this->IsAdmin((int)auth()->user()->id)) {
+            $transactions = MpesaStkCallback::all()->paginate();
+            return new MpesaStkCallbackCollection($transactions);
+        } else {
+            return $this->ErrorReporter("Unauthorized", "You Do not have rights to access this resource", 401);
+        }
     }
 }

@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="675e9e6e-4174-4e3f-bd7d-f9cb211f14d1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Billboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Billboard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Campaign.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Campaign.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BillboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BillboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CampaignController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CampaignController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ArtworkResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ArtworkResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/CampaignResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/CampaignResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_01_143735_create_billboards_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_07_01_143735_create_billboards_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_01_143756_create_campaigns_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_07_01_143756_create_campaigns_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,7 +48,7 @@
           <entry key="json" value="1" />
           <entry key="log" value="1" />
           <entry key="md" value="1" />
-          <entry key="php" value="431" />
+          <entry key="php" value="432" />
           <entry key="png" value="5" />
         </counts>
       </usages-collector>
@@ -69,7 +61,7 @@
           <entry key="JavaScript" value="1" />
           <entry key="Log" value="1" />
           <entry key="Markdown" value="1" />
-          <entry key="PHP" value="422" />
+          <entry key="PHP" value="423" />
           <entry key="PLAIN_TEXT" value="2" />
         </counts>
       </usages-collector>
@@ -77,14 +69,14 @@
         <counts>
           <entry key="dummy" value="126" />
           <entry key="env" value="242" />
-          <entry key="php" value="26852" />
+          <entry key="php" value="26910" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="242" />
           <entry key="Blade" value="1192" />
-          <entry key="PHP" value="25660" />
+          <entry key="PHP" value="25718" />
           <entry key="PLAIN_TEXT" value="126" />
         </counts>
       </usages-collector>
@@ -100,8 +92,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/api.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="43" column="72" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="72" />
+            <state relative-caret-position="350">
+              <caret line="68" column="55" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="55" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/WalletController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="313">
+              <caret line="57" column="65" selection-start-line="57" selection-start-column="65" selection-end-line="57" selection-end-column="65" />
+              <folding>
+                <element signature="e#40#90#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -166,11 +170,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BillboardController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="142" column="46" lean-forward="true" selection-start-line="142" selection-start-column="46" selection-end-line="142" selection-end-column="46" />
+            <state relative-caret-position="94">
+              <caret line="139" column="11" lean-forward="true" selection-start-line="139" selection-start-column="11" selection-end-line="139" selection-end-column="11" />
               <folding>
                 <element signature="e#40#58#0#PHP" expanded="true" />
               </folding>
@@ -188,15 +192,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Campaign.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="616">
-              <caret line="58" column="32" selection-start-line="58" selection-start-column="32" selection-end-line="58" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Artwork.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
@@ -209,7 +204,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Hash</find>
       <find>ownsAccount</find>
       <find>ModelNotFoundException</find>
       <find>Model</find>
@@ -239,6 +233,7 @@
       <find>billboard_name</find>
       <find>logged in</find>
       <find>selectbill</find>
+      <find>isAd</find>
     </findStrings>
     <replaceStrings>
       <replace>$user</replace>
@@ -260,7 +255,6 @@
         <option value="$PROJECT_DIR$/app/Http/Resources/MpesaStkCallbackResource.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/PaymentProvidersCollection.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/WalletResource.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" />
         <option value="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" />
         <option value="$PROJECT_DIR$/config/mail.php" />
         <option value="$PROJECT_DIR$/resources/views/welcome.blade.php" />
@@ -300,10 +294,11 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/CampaignController.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/ArtworkResource.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/CampaignResource.php" />
-        <option value="$PROJECT_DIR$/routes/api.php" />
         <option value="$PROJECT_DIR$/app/Billboard.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_07_01_143735_create_billboards_table.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/BillboardController.php" />
+        <option value="$PROJECT_DIR$/routes/api.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" />
       </list>
     </option>
   </component>
@@ -567,18 +562,18 @@
       <workItem from="1565728407787" duration="1183000" />
       <workItem from="1565772886410" duration="11154000" />
       <workItem from="1566209449411" duration="1994000" />
-      <workItem from="1566246000781" duration="16785000" />
+      <workItem from="1566246000781" duration="17471000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="309298000" />
+    <option name="totallyTimeSpent" value="309984000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24430871" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24430871" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -594,7 +589,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.42234042" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.42234042" />
       <window_info anchor="bottom" id="File Transfer" order="12" weight="0.32978722" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -632,13 +627,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AuthController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="37" column="43" lean-forward="true" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Wallet.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -936,13 +924,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="43" column="72" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Billboard.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
@@ -959,10 +940,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BillboardController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="142" column="46" lean-forward="true" selection-start-line="142" selection-start-column="46" selection-end-line="142" selection-end-column="46" />
+        <state relative-caret-position="94">
+          <caret line="139" column="11" lean-forward="true" selection-start-line="139" selection-start-column="11" selection-end-line="139" selection-end-column="11" />
           <folding>
             <element signature="e#40#58#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="68" column="55" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/WalletController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="57" column="65" selection-start-line="57" selection-start-column="65" selection-end-line="57" selection-end-column="65" />
+          <folding>
+            <element signature="e#40#90#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
