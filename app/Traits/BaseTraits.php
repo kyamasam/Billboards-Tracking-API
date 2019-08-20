@@ -57,8 +57,9 @@ trait BaseTraits
         if(auth()->user()->account_type == 2){
             //the user is an admin
             $is_admin=true;
+        }else{
+            $is_admin=false;
         }
-
         return $is_admin;
     }
 
