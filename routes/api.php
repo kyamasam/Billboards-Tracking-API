@@ -22,12 +22,11 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
 
     //password resets
 
-    Route::post('auth/password/create', 'PasswordResetController@create');
-    Route::get('auth/password/find/{token}', 'PasswordResetController@find');
-    Route::post('auth/password/reset', 'PasswordResetController@reset');
 
-    //todo: make all the routes plural
 
+    Route::post('password_reset', 'PasswordResetController@create');
+    Route::get('password_reset/find/{token}', 'PasswordResetController@find');
+    Route::post('password_reset/complete', 'PasswordResetController@reset');
 
     //routes that require authentication
 
@@ -36,6 +35,7 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::resource('account', 'UserAccountManagementController');
         Route::post('account/bulk_delete', 'UserAccountManagementController@bulk_delete');
         Route::put('account/update/{id}', 'UserAccountManagementController@admin_update');
+
 
         Route::resource('billboards', 'BillboardController');
         Route::post('billboards/{id}/update_image', 'BillboardController@update_image');
