@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('middle_name')->nullable();
             $table->string('first_name')->nullable();
             $table->string('msisdn')->unique();
+            $table->boolean('msisdn_verified')->nullable();
             $table->integer('account_type')->nullable()->default(1);
             $table->string('avatar')->default('/images/defaults/default_avatar.png');
             $table->string('cover_photo')->nullable();

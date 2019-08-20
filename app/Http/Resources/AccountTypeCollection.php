@@ -14,6 +14,11 @@ class AccountTypeCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return
+            [
+                "type"=>'phone_number_verification',
+                "id"=>$this->id,
+                "attributes"=> parent::toArray($request)
+            ];
     }
 }

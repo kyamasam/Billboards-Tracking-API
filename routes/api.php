@@ -35,6 +35,9 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::resource('account', 'UserAccountManagementController');
         Route::post('account/bulk_delete', 'UserAccountManagementController@bulk_delete');
         Route::put('account/update/{id}', 'UserAccountManagementController@admin_update');
+        Route::post('account/verify_phone', 'PhoneNumberVerificationController@send_code');
+        Route::post('account/verify_phone/complete', 'PhoneNumberVerificationController@send_code_complete');
+
 
 
         Route::resource('billboards', 'BillboardController');
