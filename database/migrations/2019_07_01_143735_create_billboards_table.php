@@ -26,6 +26,7 @@ class CreateBillboardsTable extends Migration
             $table->float('dimensions_width');
             $table->float('dimensions_height');
             $table->text('description');
+            $table->enum('status',['active','inactive'])->nullable(); //
             $table->softDeletes();
             $table->timestamps();
         });

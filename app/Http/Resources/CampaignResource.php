@@ -19,7 +19,7 @@ class CampaignResource extends JsonResource
             "type"=>'campaign',
             "id"=>$this->id,
             "campaign_name"=> $this->campaign_name,
-            'attributes' => parent::toArray($request)
+            "campaign_description"=> $this->campaign_description,
         ];
     }
 
@@ -30,6 +30,12 @@ class CampaignResource extends JsonResource
         }
         else{
             $budget=[];
+        }
+        if(isset($this->artwork)){
+            $artwork = ArtworkResource::collection($this->artwork);
+        }
+        else{
+            $artwork=[];
         }
         if(isset($this->CampaignStatus)){
             $campaign_status = new CampaignStatusResource($this->CampaignStatus);
@@ -48,7 +54,8 @@ class CampaignResource extends JsonResource
                 'owner' => new UserResource($this->owner),
                 'budget' => $budget,
                 'campaign_status' => $campaign_status,
-                'schedule' => $schedule
+                'schedule' => $schedule,
+                'artwork' => $artwork
             ],
         ];
     }

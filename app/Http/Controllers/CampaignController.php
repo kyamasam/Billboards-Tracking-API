@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Artwork;
 use App\Billboard;
 use App\BillboardCampaign;
 use App\Budget;
@@ -13,12 +14,16 @@ use App\Http\Resources\CampaignResource;
 use App\Jobs\SendEmailJob;
 use App\Mail\CampaignStatusChanged;
 use App\Schedule;
+use App\ScheduleTimes;
 use App\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Traits\BaseTraits;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use phpDocumentor\Reflection\Types\Null_;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class CampaignController extends Controller
 {
@@ -49,6 +54,7 @@ class CampaignController extends Controller
 
         $this->validate($request, [
             "campaign_name" => "required|string",
+            "campaign_description" => "required|string",
             "owner_id" => "required|numeric",
         ]);
 
@@ -105,9 +111,10 @@ class CampaignController extends Controller
 
     public function show($id)
     {
-        $campaign = Campaign::find($id)->with(['Owner','Budget','CampaignStatus', 'Schedule'])->first();
-
-        return new CampaignResource($campaign);
+        $campaign = Campaign::with(['Owner','Budget','CampaignStatus', 'Schedule' =>function($query) use ($id){
+            $query->where('id',3);
+        }])->get()->keyBy('id');
+        return new CampaignResource($campaign[$id]);
     }
 
 
@@ -237,6 +244,167 @@ class CampaignController extends Controller
         $campaign_select = Campaign::where('campaign_status','=',$status)->paginate();
 
         return new CampaignCollection($campaign_select);
+    }
+
+    public function bulk_create(Request $request){
+        $input = $request->all();
+
+
+        //create time slots
+        //no need for validation
+        $schedule_times=$input["time_slot"];
+        $schedule = new Schedule();
+        $schedule->save();
+        $schedule_id=$schedule->id;
+        foreach ($schedule_times as &$schedule_time){
+            $schedule_time['schedule_id']=$schedule_id;
+        }
+        try{
+            ScheduleTimes::insert($schedule_times);
+        }catch (QueryException $exception){
+            return $this->ErrorReporter("Schedule Data is invalid", "The passed Schedule data has an incorrect format",422);
+        }
+        //end create time slots
+
+        $campaign_array = (array) $input["campaign_details"];
+        //create campaign
+        $campaign_rules= [
+            "campaign_name" => "required|string",
+            "campaign_description" => "required|string",
+            "owner_id" => "required|numeric",
+        ];
+        $validator = Validator::make($campaign_array, $campaign_rules);
+
+        if ($validator->passes()) {
+
+        } else {
+            //Handle the errors
+            return response()->json(["message"=>"The given data was invalid", "errors"=>$validator->errors()]);
+        }
+
+        $campaign_object=$input["campaign_details"];
+
+
+        $campaign = new Campaign();
+        $campaign->campaign_name= $campaign_object['campaign_name'];
+        $campaign->campaign_description= $campaign_object['campaign_description'];
+        //check that the owner exists
+        if($this->ValidateAvailabilityModel(app("App\User"),$campaign_object['owner_id'])){
+            $campaign->owner_id= $campaign_object['owner_id'];
+        }
+        else{
+            return $this->ErrorReporter('User Not found','the User id passed was not found',422);
+        }
+        //save campaign
+        $campaign->save();
+
+
+
+
+        //create budget
+        $budget_object=$input["budget"];
+        $budget_rules= [
+            "total_expenditure" => "required|numeric",
+            "start_date" => "required|date_format:Y-m-d",
+            "end_date" => "required|date_format:Y-m-d",
+        ];
+        $validator = Validator::make($budget_object, $budget_rules);
+        if ($validator->passes()) {
+            $start_date = new \DateTime($budget_object['start_date']);
+            $end_date = new \DateTime($budget_object['end_date']);
+            $today = new \DateTime(date('Y-m-d'));
+
+            //check that the end date is not less than start date
+            //convert to DateTime
+            if(!($start_date <= $end_date)){
+                return $this->ErrorReporter('Invalid Data','The End Date Must be equal to or greater than the start date', 422);
+
+            }elseif (!($today<=$start_date)){
+                return $this->ErrorReporter('Invalid Data','The Start Date Must be Later than or equal to today', 422);
+            }
+
+            $budget = new Budget();
+            $budget->total_expenditure= $budget_object['total_expenditure'];
+            $budget->start_date= $budget_object['start_date'];
+            $budget->end_date= $budget_object['end_date'];
+
+            $budget->save();
+        } else {
+            //Handle error
+            return response()->json(["message"=>"The given data was invalid", "errors"=>$validator->errors()]);
+        }
+
+        //select locations
+        $location_object=$input["locations"];
+        $location_rules=[
+            "billboards" => "required|string",
+        ];
+        $validator = Validator::make($location_object, $location_rules);
+        if ($validator->passes()) {
+            $billboards = explode(',',$location_object['billboards']);
+            foreach($billboards as $billboard){
+                $new_billboard= new BillboardCampaign();
+                $new_billboard->billboard_id = $billboard;
+                $new_billboard->campaign_id = $campaign->id;
+                $new_billboard->save();
+            }
+        } else {
+
+            //Handle error
+
+            return response()->json(["message"=>"The given data was invalid", "errors"=>$validator->errors()]);
+
+        }
+
+        //create artwork
+
+        $artwork_object=$input["artwork"];
+        //convert object to associative array
+        $artwork_array= (array)$artwork_object ;
+        $rules=[
+            "height" => "required|numeric",
+            "width" => "required|numeric",
+            "billboard_id" => "required|numeric",
+        ];
+        $validator = Validator::make($artwork_array, $rules);
+        if ($validator->passes()) {
+            // Handle data
+            //check if the passed campaign_id is valid
+            $campaign_available = $this->ValidateAvailability(app("App\Campaign"),$campaign->id, 'Campaign');
+
+            if (!($campaign_available == "true")){
+                return $campaign_available;
+            }
+            //check if the passed billboard_id is valid
+            $billboard_available = $this->ValidateAvailability(app("App\Billboard"),$artwork_object['billboard_id'], 'Billboard');
+
+            if (!($billboard_available == "true")){
+                return $billboard_available;
+            }
+
+            $artwork = new Artwork();
+            $artwork->height= $artwork_object['height'];
+            $artwork->width= $artwork_object['width'];
+            $artwork->campaign_id= $campaign->id;
+            $artwork->billboard_id= $artwork_object['billboard_id'];
+            $artwork->image_src= '';
+
+
+            $artwork->save();
+        } else {
+            //Handle your error
+            return response()->json(["message"=>"The given data was invalid", "errors"=>$validator->errors()]);
+        }
+
+        //update campaign
+        $campaign=Campaign::find($campaign->id);
+        $campaign->budget_id=$budget->id;
+        $campaign->schedule_id=$schedule->id;
+        $campaign->save();
+        $campaign_bulk = Campaign::with(['Owner','Budget','CampaignStatus','Artwork', 'Schedule'])->get()->keyBy('id');
+
+        return new CampaignResource($campaign_bulk[$campaign->id]);
+
     }
 
 

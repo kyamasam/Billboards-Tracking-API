@@ -7,7 +7,6 @@ use App\Http\Resources\BillboardCollection;
 use App\Http\Resources\BillboardResource;
 use Illuminate\Http\Request;
 use App\Traits\BaseTraits;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -48,6 +47,7 @@ class BillboardController extends Controller
             "dimensions_width" => "required",
             "dimensions_height" => "required",
             "description" => "required",
+            "status" => "required"
         ]);
 
         $input = $request->all();
@@ -70,6 +70,7 @@ class BillboardController extends Controller
         $billboard->dimensions_width = $input['dimensions_width'];
         $billboard->dimensions_height = $input['dimensions_height'];
         $billboard->description = $input['description'];
+        $billboard->status = $input['status'];
 
         $billboard->save();
         return response (new BillboardResource($billboard))->setStatusCode(200);
@@ -121,6 +122,7 @@ class BillboardController extends Controller
             "dimensions_width" => "required",
             "dimensions_height" => "required",
             "description" => "required",
+            "status" => "required",
         ]);
 
         $input = $request->all();
@@ -138,6 +140,7 @@ class BillboardController extends Controller
         $billboard->dimensions_width = $input['dimensions_width'];
         $billboard->dimensions_height = $input['dimensions_height'];
         $billboard->description = $input['description'];
+        $billboard->status = $input['status'];
 
         $billboard->save();
         return response (new BillboardResource($billboard))->setStatusCode(200);

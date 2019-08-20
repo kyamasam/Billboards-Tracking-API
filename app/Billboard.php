@@ -20,6 +20,7 @@ class Billboard extends Model
         'dimensions_width',
         'dimensions_height',
         'description',
+        'status'
     ];
     /**
      * get the campaigns running on this Billboard

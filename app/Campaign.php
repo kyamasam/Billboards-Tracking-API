@@ -8,6 +8,7 @@ class Campaign extends Model
 {
     protected $fillable = [
             'campaign_name',
+            'campaign_description',
             'budget_id',
             'schedule_id',
             'campaign_status',

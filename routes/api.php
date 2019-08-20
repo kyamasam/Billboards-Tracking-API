@@ -54,12 +54,14 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::get('campaigns/locations/{campaign_id}', 'CampaignController@SelectedLocations');
         Route::delete('campaigns/locations/remove_selections', 'CampaignController@removeSelections');
 
+        //bulk create campaigns
+        Route::post('campaigns/bulk_create', 'CampaignController@bulk_create');
+
         //PAYMENTS
         //payment providers
         Route::resource('payments','PaymentProvidersController');
         Route::post('payments/stk/', 'MpesaStkTriggerController@index');
         Route::post('payments/stk/verify', 'MpesaStkTriggerController@verify');
-        Route::get('payments/stk/try_email', 'MpesaStkTriggerController@EmailTry');
 
         //user wallet
         Route::get('wallets','WalletController@index');

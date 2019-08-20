@@ -32,10 +32,23 @@ class ArtworkResource extends JsonResource
 
     public function with($request)
     {
+        if(isset($this->Campaigns)){
+            $campaigns = new CampaignResource($this->Campaigns);
+        }
+        else{
+            $campaigns=[];
+        }
+
+        if(isset($this->Billboards)){
+            $billboards = new BillboardResource($this->Billboards);
+        }
+        else{
+            $billboards=[];
+        }
         return [
             'related' => [
-                'Campaigns' => new CampaignResource($this->Campaigns),
-                'Billboards' => new BillboardResource($this->Billboards),
+                'Campaigns' => $campaigns,
+                'Billboards' => $billboards,
 
             ],
         ];
