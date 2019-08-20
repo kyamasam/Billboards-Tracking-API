@@ -249,16 +249,7 @@ class MpesaStkTriggerController extends Controller
     }
 
 
-    public function AllTransactions()
-    {
-        $transactions = MpesaStkCallback::all();
-        return new MpesaStkCallbackCollection($transactions);
-//        if ($this->IsAdmin((int)auth()->user()->id)) {
-//
-//        } else {
-//            return $this->ErrorReporter("Unauthorized", "You Do not have rights to access this resource", 401);
-//        }
-    }
+
 
 
     function EmailTry(){
