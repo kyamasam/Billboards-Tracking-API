@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MpesaStkCallbackCollection;
 use App\Http\Resources\MpesaStkCallbackResource;
 use App\Http\Resources\MpesaStkTriggerResource;
 use App\Jobs\SendEmailJob;
@@ -244,6 +245,17 @@ class MpesaStkTriggerController extends Controller
 
         } else {
             return $this->ErrorReporter('Payment could not be processed', $callback_record->resultDesc, 422);
+        }
+    }
+
+
+    public function AllTransactions()
+    {
+        if ($this->IsAdmin((int)auth()->user()->id)) {
+            $transactions = MpesaStkCallback::all();
+            return new MpesaStkCallbackCollection($transactions);
+        } else {
+            return $this->ErrorReporter("Unauthorized", "You Do not have rights to access this resource", 401);
         }
     }
 
