@@ -50,7 +50,7 @@ class PhoneNumberVerificationController extends Controller
         // Use the service
         $result   = $sms->send([
             'to'      => $input['phone_number'],
-            'message' => $code
+            'message' => 'Your Adklout verification code is:'. $code
         ]);
 
         $phone_verification = new PhoneNumberVerification();
