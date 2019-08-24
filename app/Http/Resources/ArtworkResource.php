@@ -23,6 +23,8 @@ class ArtworkResource extends JsonResource
                 "campaign_id"=>$this->campaign_id, //left for redundancy
                 "billboard_id"=>$this->billboard_id, //left for redundancy
                 "width"=>$this->width,
+                "file_type"=>$this->file_type,
+                "animate"=>$this->animate,
                 "image_src"=>$this->image_src,
             ]
 

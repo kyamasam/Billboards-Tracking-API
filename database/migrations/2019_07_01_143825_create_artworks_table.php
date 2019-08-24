@@ -17,9 +17,11 @@ class CreateArtworksTable extends Migration
             $table->bigIncrements('id');
             $table->float('height');
             $table->float('width');
+            $table->string('file_type')->nullable();
             $table->float('campaign_id')->references('id')->on('campaigns')->nullable();
             $table->float('billboard_id')->references('id')->on('billboards')->nullable();
             $table->string('image_src');
+            $table->boolean('animate')->default(false);
             $table->timestamps();
         });
     }
