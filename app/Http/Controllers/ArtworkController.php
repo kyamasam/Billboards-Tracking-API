@@ -42,6 +42,8 @@ class ArtworkController extends Controller
             "image_src" => "required|file",
             "campaign_id" => "required|numeric",
             "billboard_id" => "required|numeric",
+            "file_type" => "required",
+            "animate" => "required",
         ]);
 
 
@@ -109,6 +111,8 @@ class ArtworkController extends Controller
 //            "image_src" => "required|file",
             "campaign_id" => "required|numeric",
             "billboard_id" => "required|numeric",
+            "file_type" =>"required",
+            "animate" =>"required",
         ]);
 
 
@@ -133,6 +137,8 @@ class ArtworkController extends Controller
         $artwork->width= $input['width'];
         $artwork->campaign_id= $input['campaign_id'];
         $artwork->billboard_id= $input['billboard_id'];
+        $artwork->file_type= $input['file_type'];
+        $artwork->animate= $input['animate'];
 
 
         $artwork->save();
