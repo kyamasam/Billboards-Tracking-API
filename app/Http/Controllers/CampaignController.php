@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use phpDocumentor\Reflection\Types\Null_;
 use PhpParser\Node\Expr\Cast\Object_;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class CampaignController extends Controller
 {
@@ -299,17 +301,18 @@ class CampaignController extends Controller
         $campaign->save();
 
 
-
-
         //create budget
         $budget_object=$input["budget"];
         $budget_rules= [
-            "total_expenditure" => "required|numeric",
+            "total_animation_cost" => "required|numeric",
+            "total_campaign_cost" => "required|numeric",
+            "final_cost" => "required|numeric",
             "start_date" => "required|date_format:Y-m-d",
             "end_date" => "required|date_format:Y-m-d",
         ];
         $validator = Validator::make($budget_object, $budget_rules);
         if ($validator->passes()) {
+
             $start_date = new \DateTime($budget_object['start_date']);
             $end_date = new \DateTime($budget_object['end_date']);
             $today = new \DateTime(date('Y-m-d'));
@@ -324,9 +327,11 @@ class CampaignController extends Controller
             }
 
             $budget = new Budget();
-            $budget->total_expenditure= $budget_object['total_expenditure'];
             $budget->start_date= $budget_object['start_date'];
             $budget->end_date= $budget_object['end_date'];
+            $budget->total_animation_cost = $budget_object['total_animation_cost'];
+            $budget->total_campaign_cost = $budget_object['total_campaign_cost'];
+            $budget->final_cost = $budget_object['final_cost'];
 
             $budget->save();
         } else {
@@ -358,43 +363,68 @@ class CampaignController extends Controller
 
         //create artwork
 
-        $artwork_object=$input["artwork"];
         //convert object to associative array
-        $artwork_array= (array)$artwork_object ;
-        $rules=[
-            "height" => "required|numeric",
-            "width" => "required|numeric",
-            "billboard_id" => "required|numeric",
-        ];
-        $validator = Validator::make($artwork_array, $rules);
-        if ($validator->passes()) {
-            // Handle data
-            //check if the passed campaign_id is valid
-            $campaign_available = $this->ValidateAvailability(app("App\Campaign"),$campaign->id, 'Campaign');
+        $artworks=$input["artwork"];
+        $now = strtotime(date("h:i:sa"));
 
-            if (!($campaign_available == "true")){
-                return $campaign_available;
+
+        foreach ($artworks as &$artwork){
+            $artwork_object=$artwork;
+            $artwork_array= (array)$artwork_object ;
+            $rules=[
+                "height" => "required|numeric",
+                "width" => "required|numeric",
+                "billboard_id" => "required|numeric",
+                "image_src" => "required|file",
+                "file_type"=>"required",
+                "animate"=>"required",
+            ];
+            $validator = Validator::make($artwork_array, $rules);
+            if ($validator->passes()) {
+                // Handle data
+                //check if the passed campaign_id is valid
+                $campaign_available = $this->ValidateAvailability(app("App\Campaign"),$campaign->id, 'Campaign');
+
+                if (!($campaign_available == "true")){
+                    return $campaign_available;
+                }
+                //check if the passed billboard_id is valid
+                $billboard_available = $this->ValidateAvailability(app("App\Billboard"),$artwork_object['billboard_id'], 'Billboard');
+
+                if (!($billboard_available == "true")){
+                    return $billboard_available;
+                }
+
+                $artwork = new Artwork();
+                $artwork->height= $artwork_object['height'];
+                $artwork->width= $artwork_object['width'];
+                $artwork->campaign_id= $campaign->id;
+                $artwork->file_type= $artwork_object['file_type'];
+                $artwork->animate= $artwork_object['animate'];
+                $artwork->billboard_id= $artwork_object['billboard_id'];
+
+                //image file upload
+                $original_image_path = $artwork_object['image_src'];
+
+                //clean up path of old artwork
+                $original_image_path = str_replace(env('MEDIA_SERVER_URL'),"",$original_image_path);
+                //delete existing artwork
+                File::delete(env('MEDIA_SERVER_FOLDER').$original_image_path);
+
+                $artwork_image_ext=$request->file('image_src')->getClientOriginalExtension();
+                $artwork_image_file = $request->file('image_src');
+                $artwork_image_file_name= 'art'.$request->campaign_id.$now.'.'.$artwork_image_ext;
+                Storage::disk('local')->putFileAs('public/artwork',$artwork_image_file,$artwork_image_file_name);
+                $artwork->image_src= env('MEDIA_SERVER_URL').'artwork/'.$artwork_image_file_name;
+
+
+                $artwork->save();
+            } else {
+                //Handle your error
+                return response()->json(["message"=>"The given data was invalid", "errors"=>$validator->errors()]);
             }
-            //check if the passed billboard_id is valid
-            $billboard_available = $this->ValidateAvailability(app("App\Billboard"),$artwork_object['billboard_id'], 'Billboard');
-
-            if (!($billboard_available == "true")){
-                return $billboard_available;
-            }
-
-            $artwork = new Artwork();
-            $artwork->height= $artwork_object['height'];
-            $artwork->width= $artwork_object['width'];
-            $artwork->campaign_id= $campaign->id;
-            $artwork->billboard_id= $artwork_object['billboard_id'];
-            $artwork->image_src= '';
-
-
-            $artwork->save();
-        } else {
-            //Handle your error
-            return response()->json(["message"=>"The given data was invalid", "errors"=>$validator->errors()]);
         }
+
 
         //update campaign
         $campaign=Campaign::find($campaign->id);
@@ -444,11 +474,9 @@ class CampaignController extends Controller
                     $campaign_user_wallet=$campaign->Owner()->first()->Wallet()->get();
                     //get schedules
                     $schedules = $campaign->Schedule()->first()->ScheduleTimes()->get();
-                    $campaign_cost=0.0;
-                    //calculate the total cost of campaign
-                    foreach ($schedules as $schedule=>$key){
-                        $campaign_cost+=$schedules[$schedule]->total_cost;
-                    }
+                    //total cost of campaign
+                    $campaign_cost = $campaign->Budget()->first()->final_cost;
+
                     $wallet_balance=$campaign_user_wallet[0]->credit_balance;
                     //compare the balance in the users account
                     if($wallet_balance>= $campaign_cost){
@@ -458,7 +486,8 @@ class CampaignController extends Controller
                         $campaign_user_wallet[0]->update(['credit_balance' => $new_wallet_balance]);
                         $campaign->update(array('campaign_status'=>$passed_campaign_status));
                     }else{
-                        //this user is a broke nigga
+                        //this user is broke
+
                         return $this->ErrorReporter('Insufficient funds','CampaignStatus Could not be activated due to insufficient funds',422);
                     }
 

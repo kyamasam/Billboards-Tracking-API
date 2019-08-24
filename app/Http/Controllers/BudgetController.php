@@ -32,7 +32,9 @@ class BudgetController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "total_expenditure" => "required|numeric",
+            "total_animation_cost" => "required|numeric",
+            "total_campaign_cost" => "required|numeric",
+            "final_cost" => "required|numeric",
             "start_date" => "required|date_format:Y-m-d",
             "end_date" => "required|date_format:Y-m-d",
         ]);
@@ -89,7 +91,9 @@ class BudgetController extends Controller
 
 
         $this->validate($request, [
-            "total_expenditure" => "required|numeric",
+            "total_animation_cost" => "required|numeric",
+            "total_campaign_cost" => "required|numeric",
+            "final_cost" => "required|numeric",
             "start_date" => "required|date_format:Y-m-d",
             "end_date" => "required|date_format:Y-m-d",
         ]);
@@ -113,7 +117,9 @@ class BudgetController extends Controller
 
 
         $budget = Budget::find($id);
-        $budget->total_expenditure= $input['total_expenditure'];
+        $budget->total_expenditure= $input['total_animation_cost'];
+        $budget->total_expenditure= $input['total_campaign_cost'];
+        $budget->total_expenditure= $input['final_cost'];
         $budget->start_date= $input['start_date'];
         $budget->end_date= $input['end_date'];
 

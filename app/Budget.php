@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Budget extends Model
 {
     protected $fillable =[
-        'total_expenditure',
+        'total_animation_cost',
+        'total_campaign_cost',
+        'final_cost',
         'start_date',
         'end_date',
     ];

@@ -15,7 +15,9 @@ class CreateBudgetsTable extends Migration
     {
         Schema::create('budgets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('total_expenditure');
+            $table->float('total_animation_cost');
+            $table->float('total_campaign_cost');
+            $table->float('final_cost');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
