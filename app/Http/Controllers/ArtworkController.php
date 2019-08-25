@@ -113,6 +113,7 @@ class ArtworkController extends Controller
             "billboard_id" => "required|numeric",
             "file_type" =>"required",
             "animate" =>"required",
+            "admin_feedback"=>"required"
         ]);
 
 
@@ -139,6 +140,7 @@ class ArtworkController extends Controller
         $artwork->billboard_id= $input['billboard_id'];
         $artwork->file_type= $input['file_type'];
         $artwork->animate= $input['animate'];
+        $artwork->admin_feedback= $input['admin_feedback'];
 
 
         $artwork->save();
