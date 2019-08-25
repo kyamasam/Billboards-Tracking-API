@@ -346,8 +346,7 @@
                                                            cellspacing="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td><a href={{env('APP_URL')}} target="_blank">View
-                                                                    Campaign</a></td>
+                                                            <td><a href={{env('PASSWORD_RESET_URL').$token}} target="_blank">Reset Password</a></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
