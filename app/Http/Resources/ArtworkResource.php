@@ -25,6 +25,7 @@ class ArtworkResource extends JsonResource
                 "width"=>$this->width,
                 "file_type"=>$this->file_type,
                 "animate"=>$this->animate,
+                "admin_feedback"=>$this->admin_feedback,
                 "image_src"=>$this->image_src,
             ]
 

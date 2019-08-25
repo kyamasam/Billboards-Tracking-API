@@ -27,7 +27,8 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
     Route::post('password_reset', 'PasswordResetController@create');
     Route::get('password_reset/find/{token}', 'PasswordResetController@find');
     Route::post('password_reset/complete', 'PasswordResetController@reset');
-
+    Route::post('account/confirm_email', 'UserAccountManagementController@confirm_email');
+    Route::post('account/confirm_email_complete', 'UserAccountManagementController@confirm_email_complete');
     //routes that require authentication
 
     Route::middleware('auth:api')->group(function () {
@@ -35,6 +36,9 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::resource('account', 'UserAccountManagementController');
         Route::post('account/bulk_delete', 'UserAccountManagementController@bulk_delete');
         Route::put('account/update/{id}', 'UserAccountManagementController@admin_update');
+        Route::post('account/change_phone_number/{id}', 'UserAccountManagementController@change_phone_number');
+
+        Route::post('account/change_email/{id}', 'UserAccountManagementController@change_email');
         Route::post('account/verify_phone', 'PhoneNumberVerificationController@send_code');
         Route::post('account/verify_phone/complete', 'PhoneNumberVerificationController@send_code_complete');
 
@@ -49,6 +53,7 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::post('campaigns/artwork/{id}/update_image', 'ArtworkController@update_image');
         Route::resource('campaigns', 'CampaignController');
         Route::get('campaigns/filter/{status}', 'CampaignController@campaignsFiltered');
+        Route::post('campaigns/days/{start_date}/{end_date}', 'CampaignController@campaignsDaysFiltered');
         Route::post('campaigns/update_status/{id}', 'CampaignController@updateCampaignStatus');
         Route::post('campaigns/locations', 'CampaignController@Locations');
         Route::get('campaigns/locations/{campaign_id}', 'CampaignController@SelectedLocations');

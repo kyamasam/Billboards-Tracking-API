@@ -519,4 +519,42 @@ class CampaignController extends Controller
         return response (new CampaignResource($campaign))->setStatusCode(200);
     }
 
+    public function campaignsDaysFiltered(Request $request, $start_date, $end_date){
+        //if the user has passed in days
+        $input= $request->all();
+        $days = $input['days'];
+        $day_names = explode(',',$days);
+        $campaigns = Campaign::with(['budget','Schedule.ScheduleTimes'])
+            ->whereHas(
+            'budget', function ($query) use($start_date,$end_date){
+            $query->whereDate('start_date','<=',$start_date)->whereDate('end_date','>=',$end_date);
+        })->whereHas('Schedule.ScheduleTimes', function ($query){
+            $query->where('days','!=','');
+            })
+            ->get()->toArray();
+
+
+        //create an array of campaign ids that satisfy the condition
+        $selected_campaigns= array();
+
+        //loop through the whole array
+        foreach ($campaigns as $campaign){
+            foreach ($campaign['schedule']['schedule_times'] as $schedule_time){
+                $schedule_days= explode(',',$schedule_time['days']);
+                //check if it contains the day_names
+                foreach ($day_names as $day_name){
+                   if(in_array($day_name,$schedule_days)){
+                       array_push($selected_campaigns,$campaign['id']);
+                   }
+
+                }
+            }
+
+        }
+
+        $structured_campaign=Campaign::whereIn('id',$selected_campaigns)->With(['Owner','Budget','CampaignStatus', 'Schedule','Schedule.ScheduleTimes'])->get();
+        return new CampaignCollection($structured_campaign);
+
+    }
+
 }

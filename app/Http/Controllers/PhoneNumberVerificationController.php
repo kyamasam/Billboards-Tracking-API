@@ -29,8 +29,8 @@ class PhoneNumberVerificationController extends Controller
 
     public function send_code(Request $request)
     {
-        $username = 'adklout_user'; // use 'sandbox' for development in the test environment
-        $apiKey   = 'a19bc408d9d821d60cfae281322d2b1ebb0c0fc73cb8f0d94b598454153587e8'; // use your sandbox app API key for development in the test environment
+        $username = env('AFRICAS_TALKING_USERNAME');
+        $apiKey   = env('AFRICAS_TALKING_APIKEY');
         $AT       = new AfricasTalking($username, $apiKey);
 
         // Get one of the services
