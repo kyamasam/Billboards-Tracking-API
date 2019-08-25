@@ -11,16 +11,16 @@ class PasswordReset extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $reset_url;
+    public $token;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($reset_url)
+    public function __construct($token)
     {
-        $this->$reset_url= $reset_url;
+        $this->token= $token;
 
     }
 
@@ -31,6 +31,6 @@ class PasswordReset extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('mail.password_reset');
     }
 }

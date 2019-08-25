@@ -2,19 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="675e9e6e-4174-4e3f-bd7d-f9cb211f14d1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/pdf/payment_campaign_report.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Artwork.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Artwork.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Campaign.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Campaign.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ArtworkController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ArtworkController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CampaignController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CampaignController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PhoneNumberVerificationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PhoneNumberVerificationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PasswordResetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PasswordResetController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserAccountManagementController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserAccountManagementController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ArtworkResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ArtworkResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_01_143825_create_artworks_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_07_01_143825_create_artworks_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Mail/PasswordReset.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Mail/PasswordReset.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Notifications/PasswordResetRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/PasswordResetRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/mail/password_reset.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/password_reset.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,41 +46,41 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="env" value="14" />
+          <entry key="env" value="15" />
           <entry key="gitignore" value="2" />
           <entry key="js" value="5" />
           <entry key="json" value="1" />
           <entry key="log" value="1" />
           <entry key="md" value="1" />
-          <entry key="php" value="498" />
+          <entry key="php" value="507" />
           <entry key="png" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key=".env file" value="14" />
-          <entry key="Blade" value="13" />
+          <entry key=".env file" value="15" />
+          <entry key="Blade" value="15" />
           <entry key="Image" value="5" />
           <entry key="JSON" value="1" />
           <entry key="JavaScript" value="5" />
           <entry key="Log" value="1" />
           <entry key="Markdown" value="1" />
-          <entry key="PHP" value="485" />
+          <entry key="PHP" value="492" />
           <entry key="PLAIN_TEXT" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="126" />
-          <entry key="env" value="301" />
-          <entry key="php" value="31964" />
+          <entry key="env" value="309" />
+          <entry key="php" value="32288" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key=".env file" value="301" />
-          <entry key="Blade" value="1327" />
-          <entry key="PHP" value="30637" />
+          <entry key=".env file" value="309" />
+          <entry key="Blade" value="1348" />
+          <entry key="PHP" value="30940" />
           <entry key="PLAIN_TEXT" value="126" />
         </counts>
       </usages-collector>
@@ -103,8 +96,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/api.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="55" column="19" selection-start-line="55" selection-start-column="19" selection-end-line="55" selection-end-column="19" />
+            <state relative-caret-position="226">
+              <caret line="26" column="58" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -112,35 +105,53 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PasswordResetController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-471">
-              <caret line="27" column="33" lean-forward="true" selection-start-line="27" selection-start-column="33" selection-end-line="27" selection-end-column="33" />
+            <state relative-caret-position="132">
+              <caret line="39" column="63" selection-start-line="39" selection-start-column="63" selection-end-line="39" selection-end-column="63" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/pdf/payment_campaign_report.blade.php">
+        <entry file="file://$PROJECT_DIR$/app/Mail/PasswordReset.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="133" column="17" lean-forward="true" selection-start-line="133" selection-start-column="17" selection-end-line="133" selection-end-column="17" />
+            <state relative-caret-position="335">
+              <caret line="33" column="35" lean-forward="true" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database/migrations/2019_07_01_143825_create_artworks_table.php">
+        <entry file="file://$PROJECT_DIR$/resources/views/mail/password_reset.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="23" column="36" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="36" />
+            <state relative-caret-position="233">
+              <caret line="348" column="77" selection-start-line="348" selection-start-column="74" selection-end-line="348" selection-end-column="77" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Artwork.php">
+        <entry file="file://$PROJECT_DIR$/app/Notifications/PasswordResetRequest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="8" column="125" selection-start-line="8" selection-start-column="125" selection-end-line="8" selection-end-column="125" />
+            <state relative-caret-position="416">
+              <caret line="46" column="27" selection-start-line="46" selection-start-column="27" selection-end-line="46" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Notifications/PasswordResetSuccess.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-352">
+              <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.env">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="7" column="56" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -148,8 +159,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ArtworkController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="150" column="20" lean-forward="true" selection-start-line="150" selection-start-column="20" selection-end-line="150" selection-end-column="20" />
+            <state relative-caret-position="352">
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="e#40#56#0#PHP" expanded="true" />
               </folding>
@@ -157,38 +168,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Resources/ArtworkResource.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="26" column="42" lean-forward="true" selection-start-line="26" selection-start-column="42" selection-end-line="26" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Schedule.php">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CampaignController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="5" lean-forward="true" selection-start-column="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Campaign.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="622">
-              <caret line="60" selection-start-line="60" selection-end-line="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/MpesaStkTriggerController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="231" column="46" selection-start-line="231" selection-start-column="46" selection-end-line="231" selection-end-column="46" />
+            <state relative-caret-position="132">
+              <caret line="517" selection-start-line="517" selection-end-line="517" />
             </state>
           </provider>
         </entry>
@@ -197,9 +181,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>QUEUE_CONNECTION</find>
-      <find>disk</find>
-      <find>update_status</find>
       <find>user</find>
       <find>user()</find>
       <find>zero</find>
@@ -227,6 +208,9 @@
       <find>DateTime</find>
       <find>::with(</find>
       <find>foreach</find>
+      <find>save</find>
+      <find>-&gt;update</find>
+      <find>Password Reset token sent</find>
     </findStrings>
     <replaceStrings>
       <replace>$user</replace>
@@ -251,7 +235,6 @@
         <option value="$PROJECT_DIR$/database/migrations/2014_10_12_100000_create_password_resets_table.php" />
         <option value="$PROJECT_DIR$/app/PasswordReset.php" />
         <option value="$PROJECT_DIR$/app/Notifications/PasswordResetSuccess.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/PasswordResetController.php" />
         <option value="$PROJECT_DIR$/config/filesystems.php" />
         <option value="&lt;ee6404a2-659c-4a9c-8935-194cd463f58c&gt;/adklout-api/public_html/app/Http/Controllers/MpesaStkTriggerController.php" />
         <option value="$PROJECT_DIR$/app/Mail/SendMailable.php" />
@@ -267,10 +250,7 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/MpesaStkTriggerController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" />
         <option value="$PROJECT_DIR$/app/Traits/BaseTraits.php" />
-        <option value="$PROJECT_DIR$/app/Mail/PasswordReset.php" />
-        <option value="$PROJECT_DIR$/resources/views/mail/password_reset.blade.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/app/Notifications/PasswordResetRequest.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_08_20_094726_create_phone_number_verifications_table.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/PhoneNumberVerificationResource.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/AccountTypeCollection.php" />
@@ -279,11 +259,9 @@
         <option value="$PROJECT_DIR$/app/Budget.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/BudgetController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/PhoneNumberVerificationController.php" />
-        <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/app/Notifications/ConfirmEmail.php" />
         <option value="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" />
         <option value="$PROJECT_DIR$/app/User.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/UserAccountManagementController.php" />
         <option value="$PROJECT_DIR$/resources/views/pdf/payment_campaign_report.blade.php" />
         <option value="$PROJECT_DIR$/routes/api.php" />
         <option value="$PROJECT_DIR$/app/Campaign.php" />
@@ -292,6 +270,12 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/ArtworkController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CampaignController.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/ArtworkResource.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/UserAccountManagementController.php" />
+        <option value="$PROJECT_DIR$/app/Notifications/PasswordResetRequest.php" />
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/resources/views/mail/password_reset.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/PasswordResetController.php" />
+        <option value="$PROJECT_DIR$/app/Mail/PasswordReset.php" />
       </list>
     </option>
   </component>
@@ -459,13 +443,6 @@
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="mail" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="adklout_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="adklout_api" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="pdf" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -570,16 +547,15 @@
       <workItem from="1566399215130" duration="4255000" />
       <workItem from="1566508066474" duration="361000" />
       <workItem from="1566583204290" duration="740000" />
-      <workItem from="1566683498730" duration="21561000" />
+      <workItem from="1566683498730" duration="26595000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="350063000" />
+    <option name="totallyTimeSpent" value="355097000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26096612" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -597,7 +573,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.36702126" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.36702126" />
       <window_info anchor="bottom" id="File Transfer" order="12" weight="0.32978722" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -636,20 +612,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/filesystems.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1342">
-          <caret line="61" column="32" selection-start-line="61" selection-start-column="31" selection-end-line="61" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Resources/ArtworkCollection.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/laravel/passport/src/ApiTokenCookieFactory.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
@@ -730,13 +692,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="22" column="33" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/mail/password_reset.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7348">
-          <caret line="334" column="32" selection-start-line="334" selection-start-column="32" selection-end-line="334" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -829,33 +784,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Mail/PasswordReset.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Notifications/ConfirmEmail.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="440">
           <caret line="49" column="38" lean-forward="true" selection-start-line="49" selection-start-column="38" selection-end-line="49" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Notifications/PasswordResetRequest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="19" column="38" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="38" />
-          <caret line="21" column="30" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="30" />
-          <caret line="12" column="21" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="29" column="24" lean-forward="true" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -914,30 +846,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserAccountManagementController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="213" column="9" lean-forward="true" selection-start-line="213" selection-start-column="9" selection-end-line="213" selection-end-column="9" />
-          <folding>
-            <element signature="e#40#78#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PasswordResetController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-471">
-          <caret line="27" column="33" lean-forward="true" selection-start-line="27" selection-start-column="33" selection-end-line="27" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="55" column="19" selection-start-line="55" selection-start-column="19" selection-end-line="55" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Schedule.php">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -949,13 +857,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="622">
           <caret line="60" selection-start-line="60" selection-end-line="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CampaignController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="391" column="36" lean-forward="true" selection-start-line="391" selection-start-column="36" selection-end-line="391" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -980,20 +881,93 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Resources/ArtworkResource.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="26" column="42" selection-start-line="26" selection-start-column="42" selection-end-line="26" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ArtworkController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="150" column="20" lean-forward="true" selection-start-line="150" selection-start-column="20" selection-end-line="150" selection-end-column="20" />
+        <state relative-caret-position="352">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
           <folding>
             <element signature="e#40#56#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Resources/ArtworkResource.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CampaignController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="26" column="42" lean-forward="true" selection-start-line="26" selection-start-column="42" selection-end-line="26" selection-end-column="42" />
+        <state relative-caret-position="132">
+          <caret line="517" selection-start-line="517" selection-end-line="517" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="26" column="58" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Notifications/PasswordResetSuccess.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-352">
+          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Notifications/Messages/MailMessage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="5" lean-forward="true" selection-start-column="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Notifications/PasswordResetRequest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="46" column="27" selection-start-line="46" selection-start-column="27" selection-end-line="46" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserAccountManagementController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="146" lean-forward="true" selection-start-line="146" selection-end-line="146" />
+          <folding>
+            <element signature="e#40#78#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PasswordResetController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="39" column="63" selection-start-line="39" selection-start-column="63" selection-end-line="39" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Mail/PasswordReset.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="33" column="35" lean-forward="true" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/mail/password_reset.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="348" column="77" selection-start-line="348" selection-start-column="74" selection-end-line="348" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" column="56" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="56" />
         </state>
       </provider>
     </entry>

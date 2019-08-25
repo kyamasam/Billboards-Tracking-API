@@ -82,28 +82,15 @@ class UserAccountManagementController extends Controller
 
         $this->validate($request, [
             "user_name"=> "required|unique:users,user_name,".$id,
-            "last_name"=> "required|min:3",
-            "middle_name"=> "required|min:3",
-            "first_name"=> "required|min:3",
-            "avatar"=> "required|",
-            "cover_photo"=> "required|",
         ]);
 
 
         $input =  $request->all();
         //fetch user
         $user = User::find($id);
-
-        $user->user_name =  $input['user_name'];
-        $user->last_name = $input['last_name'];
-        $user->middle_name = $input['middle_name'];
-        $user->first_name = $input['first_name'];
-        $user->avatar = $input['avatar'];
-        $user->cover_photo = $input['cover_photo'];
-
+        $user->update($input);
         $user->save();
 
-//        $user_edited = User::find($id);
 
         return response (new UserResource($user))->setStatusCode(200);
 
