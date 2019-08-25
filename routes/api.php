@@ -37,6 +37,7 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::post('account/bulk_delete', 'UserAccountManagementController@bulk_delete');
         Route::put('account/update/{id}', 'UserAccountManagementController@admin_update');
         Route::post('account/change_phone_number/{id}', 'UserAccountManagementController@change_phone_number');
+        Route::post('account/change_password/', 'UserAccountManagementController@change_password');
 
         Route::post('account/change_email/{id}', 'UserAccountManagementController@change_email');
         Route::post('account/verify_phone', 'PhoneNumberVerificationController@send_code');

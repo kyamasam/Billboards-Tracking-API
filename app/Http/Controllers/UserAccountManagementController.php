@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use App\Traits\BaseTraits;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserAccountManagementController extends Controller
@@ -285,6 +286,29 @@ class UserAccountManagementController extends Controller
         }
 
 
+    }
+
+    public function change_password(Request $request){
+
+        $this->validate($request, [
+            'current_password' => 'required',
+            'password' => 'required|same:password',
+            'password_confirmation' => 'required|same:password',
+        ]);
+        $input = $request->all();
+        $current_password = auth()->user()->password;
+        if(Hash::check($input['current_password'], $current_password))
+        {
+            $user_id =auth()->user()->id;
+            $obj_user = User::find($user_id);
+            $obj_user->password = Hash::make($input['password']);;
+            $obj_user->save();
+            return $this->SuccessReporter('Password Changed','Password was changed successfully',200);
+        }
+        else
+        {
+            return $this->ErrorReporter('Incorrect current password','The current password is incorrect',422);
+        }
     }
 
 
