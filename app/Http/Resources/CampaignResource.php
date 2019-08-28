@@ -49,13 +49,20 @@ class CampaignResource extends JsonResource
         else{
             $schedule=[];
         }
+        if(isset($this->Billboards)){
+            $billboards= new BillboardCollection($this->Billboards);
+        }
+        else{
+            $billboards=[];
+        }
         return [
             'related' => [
                 'owner' => new UserResource($this->owner),
                 'budget' => $budget,
                 'campaign_status' => $campaign_status,
                 'schedule' => $schedule,
-                'artwork' => $artwork
+                'artwork' => $artwork,
+                'billboards' => $billboards
             ],
         ];
     }

@@ -113,7 +113,7 @@ class CampaignController extends Controller
 
     public function show($id)
     {
-        $campaign = Campaign::with(['Owner','Budget','CampaignStatus', 'Schedule' =>function($query) use ($id){
+        $campaign = Campaign::with(['Owner','Budget','Billboards','CampaignStatus', 'Schedule' =>function($query) use ($id){
             $query->where('id',3);
         }])->get()->keyBy('id');
         return new CampaignResource($campaign[$id]);
