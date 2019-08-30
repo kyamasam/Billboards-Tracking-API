@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Artwork extends Model
 {
-    protected $fillable = ['height', 'width', 'image_src','campaign_id' ,'billboard_id','file_type','animate','admin_feedback'];
+    protected $fillable = ['height', 'width', 'image_src','campaign_id' ,'billboard_id','file_type','animate','admin_feedback','approved'];
 
 
     /**

@@ -22,6 +22,7 @@ class CreateArtworksTable extends Migration
             $table->float('billboard_id')->references('id')->on('billboards')->nullable();
             $table->string('image_src');
             $table->boolean('animate')->default(false);
+            $table->boolean('approved')->nullable()->default(false);
             $table->text('admin_feedback')->nullable();
             $table->timestamps();
         });
