@@ -25,9 +25,9 @@ return [
     ],
 
     'ses' => [
-        'key' => env('AWS_ACCESS_KEY_ID'),
-        'secret' => env('AWS_SECRET_ACCESS_KEY'),
-        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+        'key' => env('AKIAYFXWZUD5XN6CBFWW'),
+        'secret' => env('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'),
+        'region' => env('AWS_DEFAULT_REGION', 'us-west-2b'),
     ],
 
     'sparkpost' => [
