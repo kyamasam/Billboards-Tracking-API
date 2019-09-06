@@ -110,38 +110,11 @@ class BillboardController extends Controller
     public function update(Request $request, $id)
     {
 
-        $this->validate($request, [
-            "display_duration" => "required",
-            "location_name" => "required",
-            "location_lat" => "required",
-            "location_long" => "required",
-            "placement" => "required",
-//            "billboard_picture" => "required|mimes:jpg,jpeg,png,bmp,tiff |max:4096",
-            "average_daily_views" => "required",
-            "definition" => "required",
-            "dimensions_width" => "required",
-            "dimensions_height" => "required",
-            "description" => "required",
-            "status" => "required",
-        ]);
-
         $input = $request->all();
 
         $billboard = Billboard::find($id);
-        $now = strtotime(date("h:i:sa"));
 
-        $billboard->display_duration = $input['display_duration'];
-        $billboard->location_name = $input['location_name'];
-        $billboard->location_lat = $input['location_lat'];
-        $billboard->location_long = $input['location_long'];
-        $billboard->placement = $input['placement'];
-        $billboard->average_daily_views = $input['average_daily_views'];
-        $billboard->definition = $input['definition'];
-        $billboard->dimensions_width = $input['dimensions_width'];
-        $billboard->dimensions_height = $input['dimensions_height'];
-        $billboard->description = $input['description'];
-        $billboard->status = $input['status'];
-
+        $billboard->update($input);
         $billboard->save();
         return response (new BillboardResource($billboard))->setStatusCode(200);
     }
