@@ -19,8 +19,14 @@ class AccountTypesTableSeeder extends Seeder
         );
         DB::table('account_types')->insert(
             [
-                'name'=>'Admin',
+                'name'=>'SuperAdmin',
                 'description'=>'Administrator. Has highest access Level',
+            ]
+        );
+        DB::table('account_types')->insert(
+            [
+                'name'=>'Agent',
+                'description'=>'Approves Billboards',
             ]
         );
     }

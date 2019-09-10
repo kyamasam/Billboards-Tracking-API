@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use AfricasTalking\SDK\AfricasTalking;
 use App\User;
 use App\Wallet;
 use Illuminate\Database\Eloquent\Model;
@@ -79,6 +80,8 @@ trait BaseTraits
     }
 
 
+
+
     public function OwnsAccount(int $user_id){
 
         $owns_acc = true;
@@ -140,6 +143,22 @@ trait BaseTraits
         //create a credit verifier
         $user_wallet->credit_balance_verifier=Hash::make($user_id.$zero);
         $user_wallet->save();
+    }
+
+    public function SendMessage($phone_number, $message){
+        $username = env('AFRICAS_TALKING_USERNAME');
+        $apiKey   = env('AFRICAS_TALKING_APIKEY');
+        $AT       = new AfricasTalking($username, $apiKey);
+
+        // Get one of the services
+        $sms      = $AT->sms();
+
+
+        // Use the service
+        $result   = $sms->send([
+            'to'      => $phone_number,
+            'message' => $message
+        ]);
     }
 
 }

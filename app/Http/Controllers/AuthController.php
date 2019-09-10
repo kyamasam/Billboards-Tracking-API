@@ -18,12 +18,16 @@ class AuthController extends Controller
     public function register(Request $request ){
 
         //todo: validate length of phone numbers
-        $this->validate($request, [
+        $request->validate([
             'user_name' => 'required|min:3|unique:users',
             'email' => 'required|email|unique:users',
             'msisdn' => 'required|numeric|unique:users',
             'password' => 'required|min:6|confirmed',
-        ]);
+        ],[
+            'msisdn.required'=>'Phone Number is required',
+            'msisdn.numeric'=>'Phone Number should be numeric',
+            'msisdn.unique'=>'Phone Number has already been taken',
+            ]);
 
         $user= User::create([
             'user_name' => $request->user_name,

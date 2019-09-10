@@ -33,6 +33,7 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
 
     Route::middleware('auth:api')->group(function () {
          Route::get('auth/details', 'AuthController@details');
+         Route::get('account/account_types', 'UserAccountManagementController@account_types');
         Route::resource('account', 'UserAccountManagementController');
         Route::post('account/bulk_delete', 'UserAccountManagementController@bulk_delete');
         Route::put('account/update/{id}', 'UserAccountManagementController@admin_update');
@@ -54,6 +55,7 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::post('campaigns/artwork/{id}/update_image', 'ArtworkController@update_image');
         Route::resource('campaigns', 'CampaignController');
         Route::get('campaigns/filter/{status}', 'CampaignController@campaignsFiltered');
+        Route::get('campaigns/users/{id}', 'CampaignController@CampaignByUserId');
         Route::post('campaigns/days/{start_date}/{end_date}', 'CampaignController@campaignsDaysFiltered');
         Route::post('campaigns/update_status/{id}', 'CampaignController@updateCampaignStatus');
         Route::post('campaigns/locations', 'CampaignController@Locations');
@@ -75,6 +77,8 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::get('wallets/transactions','WalletController@transactions');
 
     });
+
+
 
 });
 

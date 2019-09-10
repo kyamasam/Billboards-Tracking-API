@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use AfricasTalking\SDK\AfricasTalking;
+use App\AccountType;
+use App\Http\Resources\AccountTypeCollection;
 use App\Http\Resources\PhoneNumberVerificationResource;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
@@ -98,6 +100,9 @@ class UserAccountManagementController extends Controller
 
 //        return response()->json(['data' => $user]);
     }
+    public function account_types(){
+        return new AccountTypeCollection(AccountType::all());
+    }
 
     public function change_phone_number(Request $request, $id){
         if($this->OwnsAccount((int)$id)){
@@ -119,9 +124,14 @@ class UserAccountManagementController extends Controller
         //get all inputs
         $input = $request->all();
 
-        $this->validate($request, [
+        $request->validate( [
             "msisdn"=> "required|numeric|unique:users,msisdn,".$id,
+        ],[
+            'msisdn.required'=>'Phone Number is required',
+            'msisdn.numeric'=>'Phone Number should be numeric',
+            'msisdn.unique'=>'Phone Number has already been taken',
         ]);
+
 
         //generate random 4 digit code
         $code = rand(1000, 10000);
@@ -263,20 +273,12 @@ class UserAccountManagementController extends Controller
 
         if($this->IsAdmin((int)auth()->user()->id)){
 
-            $this->validate($request, [
-                "is_verified"=> "required|numeric",
-                "is_trusted"=> "required|numeric",
-                "account_status"=> "required|numeric",
-            ]);
-
 
             $input =  $request->all();
             //fetch user
             $user = User::find($id);
-            $user->is_verified = $input['is_verified'];
-            $user->is_trusted = $input['is_trusted'];
-            $user->account_status = $input['account_status'];
 
+            $user->update($input);
             $user->save();
 
             return response (new UserResource($user))->setStatusCode(200);

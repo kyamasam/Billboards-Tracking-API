@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class AccountTypeCollection extends ResourceCollection
+class AccountStatusCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -14,9 +14,6 @@ class AccountTypeCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return
-            [
-                "attributes"=> parent::toArray($request)
-            ];
+        return parent::toArray($request);
     }
 }

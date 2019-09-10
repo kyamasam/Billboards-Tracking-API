@@ -451,6 +451,14 @@ class CampaignController extends Controller
         $this->validate($request, [
             "campaign_status" => "required|numeric",
         ]);
+        //check if user owns this campaign or is agent /admin
+        $owner_id=Campaign::find(1)->owner()->get()->pluck('id')->first();
+        $current_user = auth()->user();
+        if($owner_id ==$current_user->id || $current_user->account_type == 2 || $current_user->account_type == 3){
+            //do nothing
+        }else{
+            return $this->DefaultUnauthrized();
+        }
 
         $input = $request->all();
 
@@ -458,7 +466,6 @@ class CampaignController extends Controller
 
         //if the campaign_status is passed check that campaign_status exists in the DB
         $passed_campaign_status = $input['campaign_status'];
-        $current_user = auth()->user();
         if(isset($input['campaign_status'])){
             if($this->ValidateAvailabilityModel(app("App\CampaignStatus"),$passed_campaign_status)){
 
@@ -555,6 +562,13 @@ class CampaignController extends Controller
         $structured_campaign=Campaign::whereIn('id',$selected_campaigns)->With(['Owner','Budget','CampaignStatus', 'Schedule','Schedule.ScheduleTimes'])->get();
         return new CampaignCollection($structured_campaign);
 
+    }
+
+
+    //filter by user id
+    public function CampaignByUserId($id){
+        $campaigns=User::find($id)->Campaign()->get();
+        return new CampaignCollection($campaigns);
     }
 
 }

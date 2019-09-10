@@ -49,7 +49,7 @@ class User extends Authenticatable
      */
 
     public function Campaign(){
-        return $this->hasMany(Campaign::class);
+        return $this->hasMany(Campaign::class ,'owner_id');
     }
     /**
      * get the Budgets for this user
