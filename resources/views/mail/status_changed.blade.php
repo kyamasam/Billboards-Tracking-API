@@ -343,11 +343,12 @@
                                         <p>Your {{$campaign['campaign']->campaign_name}} Campaign is now
                                             {{ $campaign['status']->name }}.</p>
                                         <p> {{ $campaign['status']->description }}.</p>
-                                        <p> Admin Comments : </p>
+                                        <p> Admin Comments: </p>
+                                        <?php $counter=1 ?>
                                         @foreach($campaign['comments'] as $comment)
-                                            <p> {{ $comment}}</p><br>
+                                            <p>{{$counter}}. {{ $comment}}</p><br>
+                                            <?php $counter++ ?>
                                         @endforeach
-                                        <br>
                                         <p>Thank you for choosing Adklout.</p>
                                         <br>
 
