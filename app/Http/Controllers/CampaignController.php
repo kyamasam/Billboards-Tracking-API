@@ -452,9 +452,9 @@ class CampaignController extends Controller
             "campaign_status" => "required|numeric",
         ]);
         //check if user owns this campaign or is agent /admin
-        $owner_id=Campaign::find(1)->owner()->get()->pluck('id')->first();
+        $owner_id=Campaign::find($id)->owner()->get()->pluck('id')->first();
         $current_user = auth()->user();
-        if($owner_id ==$current_user->id || $current_user->account_type == 2 || $current_user->account_type == 3){
+        if($owner_id == $current_user->id || $current_user->account_type == 2 || $current_user->account_type == 3){
             //do nothing
         }else{
             return $this->DefaultUnauthrized();
