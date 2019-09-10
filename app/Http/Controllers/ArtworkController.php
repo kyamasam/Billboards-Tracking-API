@@ -105,6 +105,12 @@ class ArtworkController extends Controller
     public function update(Request $request, $id)
     {
 
+        $this->validate($request, [
+            "campaign_id" => "required|numeric",
+            "billboard_id" => "required|numeric",
+
+        ]);
+
 
         $input = $request->all();
 
@@ -124,8 +130,6 @@ class ArtworkController extends Controller
 
         $artwork = Artwork::find($id);
         $artwork->update($input);
-
-
         $artwork->save();
         return response (new ArtworkResource($artwork))->setStatusCode(200);
     }
