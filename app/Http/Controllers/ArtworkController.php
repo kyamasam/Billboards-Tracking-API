@@ -105,18 +105,6 @@ class ArtworkController extends Controller
     public function update(Request $request, $id)
     {
 
-        $this->validate($request, [
-            "height" => "required|numeric",
-            "width" => "required|numeric",
-//            "image_src" => "required|file",
-            "campaign_id" => "required|numeric",
-            "billboard_id" => "required|numeric",
-            "file_type" =>"required",
-            "animate" =>"required",
-            "admin_feedback"=>"required",
-            "approved"=>"required",
-        ]);
-
 
         $input = $request->all();
 
@@ -135,14 +123,7 @@ class ArtworkController extends Controller
 
 
         $artwork = Artwork::find($id);
-        $artwork->height= $input['height'];
-        $artwork->width= $input['width'];
-        $artwork->campaign_id= $input['campaign_id'];
-        $artwork->billboard_id= $input['billboard_id'];
-        $artwork->file_type= $input['file_type'];
-        $artwork->animate= $input['animate'];
-        $artwork->admin_feedback= $input['admin_feedback'];
-        $artwork->approved= $input['approved'];
+        $artwork->update($input);
 
 
         $artwork->save();
