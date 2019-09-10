@@ -351,6 +351,7 @@
                                                 {{ $comment}}
                                                     @else
                                                 No Comments Yet
+                                                    @endif
 
                                             </p><br>
                                             <?php $counter++ ?>
