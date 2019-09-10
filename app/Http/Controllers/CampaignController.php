@@ -514,7 +514,7 @@ class CampaignController extends Controller
         $campaign->save();
 
         $saved_campaign['campaign']=Campaign::find($id);
-        $saved_campaign['comments']=Campaign::find($id)->pluck('admin_feedback')->all();
+        $saved_campaign['comments']=Campaign::find($id)->Artwork()->pluck('admin_feedback')->all();
         $saved_campaign['user']=$request->user();
         $saved_campaign['status']=Campaign::find($id)->CampaignStatus()->first();
         //recipient
