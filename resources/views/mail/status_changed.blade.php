@@ -353,7 +353,7 @@
                                                 No Comments Yet
                                                     @endif
 
-                                            </p><br>
+                                            </p>
                                             <?php $counter++ ?>
                                         @endforeach
                                         <p>Thank you for choosing Adklout.</p>
