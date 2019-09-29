@@ -55,7 +55,7 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::post('campaigns/artwork/{id}/update_image', 'ArtworkController@update_image');
         Route::resource('campaigns', 'CampaignController');
         Route::get('campaigns/filter/{status}', 'CampaignController@campaignsFiltered');
-        Route::get('campaigns/users/{id}', 'CampaignController@CampaignByUserId');
+        Route::get('campaigns/users/{id}/{status?}', 'CampaignController@CampaignByUserId');
         Route::post('campaigns/days/{start_date}/{end_date}', 'CampaignController@campaignsDaysFiltered');
         Route::post('campaigns/update_status/{id}', 'CampaignController@updateCampaignStatus');
         Route::post('campaigns/locations', 'CampaignController@Locations');
@@ -77,9 +77,6 @@ Route::group(['prefix'=>'v1','as'=>'v1.'], function() {
         Route::get('wallets/transactions','WalletController@transactions');
 
     });
-
-
-
 });
 
 

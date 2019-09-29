@@ -567,8 +567,12 @@ class CampaignController extends Controller
 
 
     //filter by user id
-    public function CampaignByUserId($id){
-        $campaigns=User::find($id)->Campaign()->get();
+    public function CampaignByUserId($id,$status=null){
+        if (isset($status)){
+            $campaigns=User::find($id)->Campaign()->where('campaign_status','=',$status)->get();
+        }else{
+            $campaigns=User::find($id)->Campaign()->get();
+        }
         return new CampaignCollection($campaigns);
     }
 
